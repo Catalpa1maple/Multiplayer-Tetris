@@ -42,14 +42,17 @@ namespace Tetris
 
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Host_Connect(object sender, RoutedEventArgs e)
         {
-
+            TCPSocket tcp = new TCPSocket();
+            tcp.TCPlisten();
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Join_Connect(object sender, RoutedEventArgs e)
         {
-
+            string IP = IPAddressTextBox.Text;
+            TCPSocket tcp = new TCPSocket();
+            tcp.TCPconnect(IP);
         }
     }
 }

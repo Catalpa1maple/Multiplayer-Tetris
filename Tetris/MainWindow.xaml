@@ -83,8 +83,14 @@
                     >
             <TextBox x:Name="IPAddressTextBox" Text="IP" TextAlignment="Center" Width="auto" Foreground="#cc000000"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="Connect" Padding="10" Width="150">Connect</Button>
-                <Button x:Name="Accept" Padding="10" Width="150">Host</Button>
+                <Button x:Name="Connect"
+                        Padding="10"
+                        Width="150"
+                        Click="Join_Connect">Connect</Button>
+                <Button x:Name="Accept"
+                        Padding="10"
+                        Width="150"
+                        Click="Host_Connect">Host</Button>
             </StackPanel>
         </StackPanel>
 
