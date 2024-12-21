@@ -6,7 +6,13 @@ namespace Tetris{
             get=> currentBlock;
             private set{
                 currentBlock=value;
-                currentBlock.Rest();
+                currentBlock.Reset();
+                for(int i = 0; i<2;i++){
+                    currentBlock.Move(1,0);
+                    if(!BlockFits()){
+                        currentBlock.Move(-1,0);
+                    }
+                }
             }
         }
         public GameGrid GameGrid {get;}
@@ -16,7 +22,7 @@ namespace Tetris{
         public GameState(){
             GameGrid= new GameGrid(22,10);
             BlockQueue= new BlockQueue();
-            currentBlock=BlockQueue.GetAndUpdate()
+            currentBlock=BlockQueue.GetAndUpdate();
         }
 
         private bool BlockFits(){
@@ -50,7 +56,13 @@ namespace Tetris{
                 currentBlock.Move(0,1);
             }
         }
+        public void MoveBlockRight(){
+            currentBlock.Move(0,1);
 
+            if(!BlockFits()){
+                currentBlock.Move(0,-1);
+            }
+        }
         private bool IsGameOver(){
             return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
