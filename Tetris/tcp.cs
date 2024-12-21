@@ -25,6 +25,7 @@ class TCPSocket{
             //handle exception
             sockfd?.Close();
             Console.WriteLine("failed to connect");
+            throw;
         }
     }        
 
@@ -39,6 +40,7 @@ class TCPSocket{
             //handle exception
             listener?.Close();
             Console.WriteLine("failed to listen");
+            throw;
         }
         TCPAccept();
         //TCPaccept();
@@ -52,6 +54,7 @@ class TCPSocket{
             }catch{
                 sockfd?.Close();
                 Console.WriteLine("failed to accept");
+                throw;
             }
         }
     }
@@ -64,6 +67,7 @@ class TCPSocket{
             }catch{
                 sockfd?.Close();
                 Console.WriteLine("failed to accept");
+                throw;
             }
         }
     }
@@ -85,7 +89,8 @@ class TCPSocket{
             Console.WriteLine("Send/Recv Error");
             sockfd?.Close();
             listener?.Close();
-            return message;
+            throw;
+            //return message;
         }
         
     }
