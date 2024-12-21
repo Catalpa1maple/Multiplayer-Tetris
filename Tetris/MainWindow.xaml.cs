@@ -44,15 +44,32 @@ namespace Tetris
 
         private void Host_Connect(object sender, RoutedEventArgs e)
         {
-            TCPSocket tcp = new TCPSocket();
-            tcp.TCPlisten();
+            try
+            {
+                TCPSocket tcp = new TCPSocket();
+                tcp.TCPlisten();
+                MessageBox.Show("Hosted");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failed to host");
+            }
         }
+
 
         private void Join_Connect(object sender, RoutedEventArgs e)
         {
-            string IP = IPAddressTextBox.Text;
-            TCPSocket tcp = new TCPSocket();
-            tcp.TCPconnect(IP);
+            try
+            {
+                string IP = IPAddressTextBox.Text;
+                TCPSocket tcp = new TCPSocket();
+                tcp.TCPconnect(IP);
+                MessageBox.Show("Joined");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failed to join");
+            }
         }
     }
 }

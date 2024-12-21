@@ -6,10 +6,41 @@
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="800" Width="1000"
-        MinWidth="1000" MinHeight="800"
+        Height="1200" Width="1200"
+        MinWidth="1200" MinHeight="1200"
         FontFamily="Inter" FontSize="28"
         >
+    
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                            CornerRadius="10" 
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="2"
+                            BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF8C00"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF4500"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="DarkSlateBlue"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,7 +54,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/Background.png" />
+            <ImageBrush ImageSource="Assets/Background.jpeg" />
         </Grid.Background>
 
         <Viewbox Grid.Row="1"
@@ -51,7 +82,9 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
                     >
-            <TextBlock Text="Hold"
+            <TextBlock Text="HOLD"
+                       FontSize="30"
+                       FontWeight="Bold"
                        TextAlignment="Center" 
                        Foreground="White"/>
             <Image x:Name="HoldIamge"
@@ -65,7 +98,9 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
                     >
-            <TextBlock Text="Next"
+            <TextBlock Text="NEXT"
+                       FontWeight="Bold"
+                       FontSize="30"
                     TextAlignment="Center" 
                     Foreground="White"/>
             <Image x:Name="NextImage"
@@ -73,26 +108,32 @@
                    Width="125" />
         </StackPanel>
 
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Width="300"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center"
-                    Background="DarkViolet"
-                    Margin="0,0,0,50"
-                    >
-            <TextBox x:Name="IPAddressTextBox" Text="IP" TextAlignment="Center" Width="auto" Foreground="#cc000000"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="Connect"
+        <Border CornerRadius="10"
+                Grid.Row="1"
+                Grid.Column="0"
+                Padding="10"
+                Background="WhiteSmoke"
+                Width="300"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,50">
+            <StackPanel>
+                <TextBox x:Name="IPAddressTextBox" Text="IP" 
+                     TextAlignment="Center" Width="auto"
+                     Foreground="#cc000000" Padding="10"
+                         Margin="0,0,0,10" TextChanged="IPAddressTextBox_TextChanged"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="Connect"
                         Padding="10"
-                        Width="150"
+                        Width="130"
                         Click="Join_Connect">Connect</Button>
-                <Button x:Name="Accept"
+                    <Button x:Name="Accept"
                         Padding="10"
-                        Width="150"
+                        Width="130"
                         Click="Host_Connect">Host</Button>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Border>
 
         <Grid x:Name="GameOverMenu"
               Background="#CC000000"
@@ -114,16 +155,45 @@
                     TextAlignment="Center"/>
 
                 <Button Content="Start Again"
+                        Background="WhiteSmoke" 
+                        Margin="0,20"
+                        Padding="5"
+                        Click="StartAgain"
+                        />
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="ErrorPage"
+            Background="#CC000000"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="3"
+            Visibility="Hidden"
+              >
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center" >
+                <TextBlock Text="Error !!!"
+                           FontSize="40"
+                           Foreground="Red"
+                           Margin="0,0,0,20" 
+                           TextAlignment="Center"/>
+
+                <TextBlock x:Name="ErrorText"
+                    FontSize="36"
+                    Foreground="Red"
+                    Margin="0,0,0,20" 
+                    TextAlignment="Center"/>
+
+                <Button Content="Start Again"
                         Background="BlueViolet" 
                         Margin="0,20"
                         Padding="5"
                         Click="StartAgain"
                         />
             </StackPanel>
-            
-            
-        </Grid>
 
 
         </Grid>
+
+
+    </Grid>
 </Window>

@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <None Remove="Assets\Background.mp4" />
-    <None Remove="Assets\Background.png" />
     <None Remove="Assets\Block-Empty.png" />
     <None Remove="Assets\Block-I.png" />
     <None Remove="Assets\Block-J.png" />
@@ -31,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Background.png" />
     <Resource Include="Assets\Block-Empty.png" />
     <Resource Include="Assets\Block-I.png" />
     <Resource Include="Assets\Block-J.png" />
