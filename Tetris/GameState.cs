@@ -15,7 +15,7 @@ namespace Tetris{
                 }
             }
         }
-        public GameGrid GameGrid {get;}
+        public Grid GameGrid {get;}
         public BlockQueue BlockQueue{get; }
         public bool GameOver { get; private set;} 
         public int Score{ get; private set; }
@@ -89,8 +89,8 @@ namespace Tetris{
             foreach(Position p in currentBlock.TilePositions()){
                 GameGrid[p.Row, p.Column]=currentBlock.Id;
             }
-            Score += GameGrid.ClearFullRows();
-            GameGrid.ClearFullRows();
+            Score += GameGrid.ClearFullRow();
+            GameGrid.ClearFullRow();
 
             if (IsGameOver()){
                 GameOver=true;
@@ -108,7 +108,24 @@ namespace Tetris{
                 PlaceBlock();
             }
         }
-
+        private int TileDropDistance(Position p){
+            int drop = 0;
+            while (GameGrid.isempty(p.Row+drop+1,p.Column)){
+                drop++;
+            }
+            return drop;
+        }
+        public int BlockDropDistance(){
+            int drop = GameGrid.row;
+            foreach(Position p in currentBlock.TilePositions()){
+                drop = System.Math.Min(drop, TileDropDistance(p));
+            }
+            return drop;
+        }
+        public void DropBlock(){
+            currentBlock.Move(BlockDropDistance(),0);
+            PlaceBlock();
+        }
 
     }
 }

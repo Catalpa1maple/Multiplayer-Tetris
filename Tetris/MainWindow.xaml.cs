@@ -38,6 +38,9 @@ namespace Tetris
             new BitmapImage(new Uri("Images/Block-Z.png", UriKind.Relative))
         };
         private Image[,] imageControls;
+        private int maxDelay = 750;
+        private int mindelay = 50;
+        private int delayDecrease = 70;
         private GameState gameState = new GameState();
         public MainWindow()
         {
@@ -53,6 +56,7 @@ namespace Tetris
         }
         private void DrawBlock (Block block){
             foreach(Position p in block.TilePositions()){
+                imageControls[p.Row,p.Column].Opacity = 1;
                 imageControls[p.Row,p.Column].Source = tileImages[block.Id];
             }
         }
@@ -70,10 +74,18 @@ namespace Tetris
         }
         private void Draw(GameState gameState){
             DrawGrid(gameState.GameGrid);
+            DrawGhostBlock(gameState.currentBlock);
             DrawBlock(gameState.currentBlock);
             DrawNextBlock(gameState.BlockQueue);
             DrawHeldBlock(gameState.Heldblock);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
+        }
+        private void DrawGhostBlock(Block block){
+            int dropDistance = gameState.BlockDropDistance();
+            foreach(Position p in block.TilePositions()){
+                imageControls[p.Row+dropDistance,p.Column].Opacity = 0.25;
+                imageControls[p.Row+dropDistance,p.Column].Source = tileImages[block.Id];
+            }
         }
         private Image[,] SetupGameCanvas(GameGrid grid)
         {
@@ -146,6 +158,9 @@ namespace Tetris
                 case Key.C:
                     gameState.HoldBlock();
                     break;
+                case Key.Space:
+                    gameState.DropBlock();
+                    break;
                 default:
                     return;
             }
@@ -154,7 +169,9 @@ namespace Tetris
         private async Task GameLoop(){
             Draw(gameState);
             while(!gameState.GameOver){
-                await Task.Delay(250);
+                int newspeed = maxDelay-gameState.Score*delayDecrease;
+                int delay= Math.Max(mindelay,newspeed);
+                await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }

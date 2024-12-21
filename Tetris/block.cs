@@ -36,5 +36,10 @@ namespace Tetris{
             offset.Row +=rows;
             offset.Column += columns;
         }
+        public void Reset(){
+            rotationState =0;
+            offset.Row=StartOffset.Row;
+            offset.Column=StartOffset.Column;
+        }
     }
 }
