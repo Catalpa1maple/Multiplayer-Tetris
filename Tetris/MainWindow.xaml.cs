@@ -27,33 +27,15 @@ namespace Tetris
             new BitmapImage(new Uri("Images/TilePurple.png", UriKind.Relative)),
             new BitmapImage(new Uri("Images/TileRed.png", UriKind.Relative))
         };
-        private ImageSource[] blockImages = new ImageSource[]{
-            new BitmapImage(new Uri("Images/Block-Empty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-I.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-J.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-L.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-O.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-S.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-T.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-Z.png", UriKind.Relative))
-        };
-        private Image[,] imageControls;
-        private GameState gameState = new GameState();
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void DrawGrid(Grid grid){
-            for(int r= 0;r<grid.row;r++){
-                for(int c=0;c<grid.column;c++){
-                    int id = grid[r,c];
-                    imageControls[r,c].Source = tileImages[id];
-                }
-            }
-        }
-        private void DrawBlock (Block block){
-            
+        private Image[,] SetupGameCanvas(GameGrid grid)
+        {
+            Image[,] imageControls = new Image[grid.Rows, grid.Coluns];
+            int cellSize
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
