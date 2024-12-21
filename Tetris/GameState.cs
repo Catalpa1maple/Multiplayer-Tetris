@@ -16,7 +16,7 @@ namespace Tetris{
         public GameState(){
             GameGrid= new GameGrid(22,10);
             BlockQueue= new BlockQueue();
-            currentBlock=BlockQueue.GetAndUpdate()
+            currentBlock=BlockQueue.GetAndUpdate();
         }
 
         private bool BlockFits(){
