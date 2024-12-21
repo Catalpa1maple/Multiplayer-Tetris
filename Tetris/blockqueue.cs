@@ -1,8 +1,11 @@
 using System;
 namespace Tetris
 {
-    public class BlockQueue{
-        private Block[] blocks = new Block[]{
+    public class BlockQueue
+    {
+        // Array containing all possible block types.
+        private Block[] blocks = new Block[]
+        {
             new IBlock(),
             new JBlock(),
             new LBlock(),
@@ -11,17 +14,31 @@ namespace Tetris
             new TBlock(),
             new ZBlock(),
         };
+
+        // Random number generator for selecting blocks randomly.
         private Random random = new Random();
-        public Block NextBlock{get;private set;}
-        private Block RandomBlock(){
+
+        // Holds the next block to be used in the game.
+        public Block NextBlock { get; private set; }
+
+        // Selects a random block from the available block types.
+        private Block RandomBlock()
+        {
             return blocks[random.Next(blocks.Length)];
         }
-        public BlockQueue(){
+
+        // Constructor to initialize the queue with a random block as the next block.
+        public BlockQueue()
+        {
             NextBlock = RandomBlock();
         }
-        public Block GetandUpdate(){
-            Block block = NextBlock;
-            while(NextBlock.Id == block.Id)
+
+        // Returns the current next block and updates to a new random block.
+        public Block GetandUpdate()
+        {
+            Block block = NextBlock; // Store the current next block.
+            // Ensure the new block is different from the previous one.
+            while (NextBlock.Id == block.Id)
                 NextBlock = RandomBlock();
             return block;
         }

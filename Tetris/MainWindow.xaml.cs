@@ -1,13 +1,10 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Threading.Tasks;
 
 namespace Tetris
 {
@@ -16,6 +13,7 @@ namespace Tetris
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Array of images for grid tiles representing different block types.
         private readonly ImageSource[] tileImages = new ImageSource[]
         {
             new BitmapImage(new Uri("Images/TileEmpty.png", UriKind.Relative)),
@@ -27,7 +25,10 @@ namespace Tetris
             new BitmapImage(new Uri("Images/TilePurple.png", UriKind.Relative)),
             new BitmapImage(new Uri("Images/TileRed.png", UriKind.Relative))
         };
-        private ImageSource[] blockImages = new ImageSource[]{
+
+        // Array of images for displaying the block queue and held block.
+        private ImageSource[] blockImages = new ImageSource[]
+        {
             new BitmapImage(new Uri("Images/Block-Empty.png", UriKind.Relative)),
             new BitmapImage(new Uri("Images/Block-I.png", UriKind.Relative)),
             new BitmapImage(new Uri("Images/Block-J.png", UriKind.Relative)),
@@ -37,87 +38,90 @@ namespace Tetris
             new BitmapImage(new Uri("Images/Block-T.png", UriKind.Relative)),
             new BitmapImage(new Uri("Images/Block-Z.png", UriKind.Relative))
         };
+
+        // 2D array to hold the Image controls for the game grid.
         private Image[,] imageControls;
+
+        // Timing and game delay settings.
         private int maxDelay = 750;
         private int mindelay = 50;
         private int delayDecrease = 70;
+
+        // The game's state.
         private GameState gameState = new GameState();
+
         public MainWindow()
         {
             InitializeComponent();
         }
-        private void DrawGrid(Grid grid){
-            for(int r= 0;r<grid.row;r++){
-                for(int c=0;c<grid.column;c++){
-                    int id = grid[r,c];
-                    imageControls[r,c].Source = tileImages[id];
+
+        // Draws the current game grid.
+        private void DrawGrid(Grid grid)
+        {
+            for (int r = 0; r < grid.row; r++)
+            {
+                for (int c = 0; c < grid.column; c++)
+                {
+                    int id = grid[r, c];
+                    imageControls[r, c].Source = tileImages[id];
                 }
             }
         }
-        private void DrawBlock (Block block){
-            foreach(Position p in block.TilePositions()){
-                imageControls[p.Row,p.Column].Opacity = 1;
-                imageControls[p.Row,p.Column].Source = tileImages[block.Id];
+
+        // Draws the currently active block.
+        private void DrawBlock(Block block)
+        {
+            foreach (Position p in block.TilePositions())
+            {
+                imageControls[p.Row, p.Column].Opacity = 1;
+                imageControls[p.Row, p.Column].Source = tileImages[block.Id];
             }
         }
-        private void DrawNextBlock (Block blockQueue){
+
+        // Draws the next block in the block queue.
+        private void DrawNextBlock(BlockQueue blockQueue)
+        {
             Block next = blockQueue.NextBlock;
-            NextImage.Source= blockImages[next.Id];
+            NextImage.Source = blockImages[next.Id];
         }
-        private void DrawHeldBlock(Block heldBlock){
-            if(heldBlock == null){
-                HoldImage.Source = blockImages[0];
-            }
-            else{
-                HoldImage.Source = blockImages[heldBlock.Id];
-            }
+
+        // Draws the held block.
+        private void DrawHeldBlock(Block heldBlock)
+        {
+            HoldImage.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
         }
-        private void Draw(GameState gameState){
+
+        // Combines all drawing operations.
+        private void Draw(GameState gameState)
+        {
             DrawGrid(gameState.GameGrid);
-            DrawGhostBlock(gameState.currentBlock);
-            DrawBlock(gameState.currentBlock);
+            DrawGhostBlock(gameState.CurrentBlock);
+            DrawBlock(gameState.CurrentBlock);
             DrawNextBlock(gameState.BlockQueue);
-            DrawHeldBlock(gameState.Heldblock);
+            DrawHeldBlock(gameState.HeldBlock);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
-        private void DrawGhostBlock(Block block){
+
+        // Draws the ghost block indicating where the block would land.
+        private void DrawGhostBlock(Block block)
+        {
             int dropDistance = gameState.BlockDropDistance();
-            foreach(Position p in block.TilePositions()){
-                imageControls[p.Row+dropDistance,p.Column].Opacity = 0.25;
-                imageControls[p.Row+dropDistance,p.Column].Source = tileImages[block.Id];
+            foreach (Position p in block.TilePositions())
+            {
+                imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
+                imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
             }
         }
-        private Image[,] SetupGameCanvas(GameGrid grid)
+
+        // Sets up the game canvas with a grid of Image controls.
+        private Image[,] SetupGameCanvas(Grid grid)
         {
-            Image[,] imageControls=new Image[grid.Rows, grid.Columns];
+            Image[,] imageControls = new Image[grid.row, grid.column];
             int cellSize = 25;
 
-            for(int c=0; c< grid.Rows; r++)
+            for (int r = 0; r < grid.row; r++)
             {
-                for(int c=0; c<grid.Columns;c++)
-                {
-                    Image imageControl = new Image
-                    {
-                        Width = cellSize,
-                        Height = cellSize,
-                    };
-                    //78:+10
-                    Canvas.SetTop(imageControl, (r-2)* cellSize + 10);
-                    Canvas.SetLeft(imageControl, c * cellSize);
-                    GameCanvas.Children.Add(imageControl);
-                    imageControls[r,c]= imageControl;
-                }
-            }
-            return imageControls;
-        }
-        private Image[,] SetupGameCanvas(GameGrid grid)
-        {
-            Image[,] imageControls=new Image[grid.Rows, grid.Columns];
-            int cellSize = 25;
-
-            for(int c=0; c< grid.Rows; r++)
-            {
-                for(int c=0; c<grid.Columns;c++)
+                for (int c = 0; c < grid.column; c++)
                 {
                     Image imageControl = new Image
                     {
@@ -125,52 +129,44 @@ namespace Tetris
                         Height = cellSize,
                     };
 
-                    Canvas.SetTop(imageControl, (r-2)* cellSize);
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
                     Canvas.SetLeft(imageControl, c * cellSize);
                     GameCanvas.Children.Add(imageControl);
-                    imageControls[r,c]= imageControl;
+                    imageControls[r, c] = imageControl;
                 }
             }
+
             return imageControls;
         }
-        
+
+        // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(gameState.GameOver){
-                return;
+            if (gameState.GameOver) return;
+
+            switch (e.Key)
+            {
+                case Key.Left: gameState.MoveBlockLeft(); break;
+                case Key.Right: gameState.MoveBlockRight(); break;
+                case Key.Down: gameState.MoveBlockDown(); break;
+                case Key.Up: gameState.RotateBlockCW(); break;
+                case Key.Z: gameState.RotateBlockCCW(); break;
+                case Key.C: gameState.HoldBlock(); break;
+                case Key.Space: gameState.DropBlock(); break;
+                default: return;
             }
-            switch(e.Key){
-                case Key.Left:
-                    gameState.MoveBlockLeft();
-                    break;
-                case Key.Right:
-                    gameState.MoveBlockRight();
-                    break;
-                case Key.Down:
-                    gameState.MoveBlockDown();
-                    break;
-                case Key.Up:
-                    gameState.RotateBlockCW();
-                    break;
-                case Key.Z:
-                    gameState.RotateBlockCCW();
-                    break;
-                case Key.C:
-                    gameState.HoldBlock();
-                    break;
-                case Key.Space:
-                    gameState.DropBlock();
-                    break;
-                default:
-                    return;
-            }
+
             Draw(gameState);
         }
-        private async Task GameLoop(){
+
+        // Main game loop.
+        private async Task GameLoop()
+        {
             Draw(gameState);
-            while(!gameState.GameOver){
-                int newspeed = maxDelay-gameState.Score*delayDecrease;
-                int delay= Math.Max(mindelay,newspeed);
+            while (!gameState.GameOver)
+            {
+                int newspeed = maxDelay - gameState.Score * delayDecrease;
+                int delay = Math.Max(mindelay, newspeed);
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
@@ -179,15 +175,21 @@ namespace Tetris
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
 
-        
-        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e){
+        // Starts the game loop when the canvas is loaded.
+        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
             await GameLoop();
         }
-        private async void PlayAgain_Click(object sender, RoutedEventArgs e){
+
+        // Resets the game and starts a new session when "Play Again" is clicked.
+        private async void PlayAgain_Click(object sender, RoutedEventArgs e)
+        {
             gameState = new GameState();
             GameOverMenu.Visibility = Visibility.Hidden;
             await GameLoop();
         }
+
+        // Sets up a host connection for multiplayer.
         private void Host_Connect(object sender, RoutedEventArgs e)
         {
             try
@@ -202,7 +204,7 @@ namespace Tetris
             }
         }
 
-
+        // Connects to a host for multiplayer.
         private void Join_Connect(object sender, RoutedEventArgs e)
         {
             try
