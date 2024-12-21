@@ -56,9 +56,24 @@ namespace Tetris
                 imageControls[p.Row,p.Column].Source = tileImages[block.Id];
             }
         }
+        private void DrawNextBlock (Block blockQueue){
+            Block next = blockQueue.NextBlock;
+            NextImage.Source= blockImages[next.Id];
+        }
+        private void DrawHeldBlock(Block heldBlock){
+            if(heldBlock == null){
+                HoldImage.Source = blockImages[0];
+            }
+            else{
+                HoldImage.Source = blockImages[heldBlock.Id];
+            }
+        }
         private void Draw(GameState gameState){
             DrawGrid(gameState.GameGrid);
             DrawBlock(gameState.currentBlock);
+            DrawNextBlock(gameState.BlockQueue);
+            DrawHeldBlock(gameState.Heldblock);
+            ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
         private Image[,] SetupGameCanvas(GameGrid grid)
         {
@@ -74,8 +89,8 @@ namespace Tetris
                         Width = cellSize,
                         Height = cellSize,
                     };
-
-                    Canvas.SetTop(imageControl, (r-2)* cellSize);
+                    //78:+10
+                    Canvas.SetTop(imageControl, (r-2)* cellSize + 10);
                     Canvas.SetLeft(imageControl, c * cellSize);
                     GameCanvas.Children.Add(imageControl);
                     imageControls[r,c]= imageControl;
@@ -128,6 +143,9 @@ namespace Tetris
                 case Key.Z:
                     gameState.RotateBlockCCW();
                     break;
+                case Key.C:
+                    gameState.HoldBlock();
+                    break;
                 default:
                     return;
             }
@@ -141,6 +159,7 @@ namespace Tetris
                 Draw(gameState);
             }
             GameOverMenu.Visibility = Visibility.Visible;
+            FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
 
         

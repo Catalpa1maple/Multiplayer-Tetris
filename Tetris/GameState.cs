@@ -18,11 +18,14 @@ namespace Tetris{
         public GameGrid GameGrid {get;}
         public BlockQueue BlockQueue{get; }
         public bool GameOver { get; private set;} 
-
+        public int Score{ get; private set; }
+        public Block Heldblock { get; private set; }
+        public bool canHold {get; private set; }
         public GameState(){
             GameGrid= new GameGrid(22,10);
             BlockQueue= new BlockQueue();
             currentBlock=BlockQueue.GetAndUpdate();
+            canHold = true;
         }
 
         private bool BlockFits(){
@@ -32,6 +35,21 @@ namespace Tetris{
                 }
                 return true;
             }
+        }
+        public void HoldBlock(){
+            if(!canHold){
+                return;
+            }
+            if(Heldblock == null){
+                Heldblock = currentBlock;
+                currentBlock = BlockQueue.GetandUpdate();
+            }
+            else{
+                Block now = currentBlock;
+                currentBlock = Heldblock;
+                Heldblock=now;
+            }
+            canHold = false;
         }
         public void RotateBlockCW(){
             currentBlock.RotateBlockCW();
@@ -71,7 +89,7 @@ namespace Tetris{
             foreach(Position p in currentBlock.TilePositions()){
                 GameGrid[p.Row, p.Column]=currentBlock.Id;
             }
-
+            Score += GameGrid.ClearFullRows();
             GameGrid.ClearFullRows();
 
             if (IsGameOver()){
@@ -79,6 +97,7 @@ namespace Tetris{
             }
             else{
                 currentBlock=BlockQueue.GetAndUpdate();
+                canHold = true;
             }
         }
 
