@@ -184,7 +184,7 @@
                            FontWeight="Heavy"
                            Foreground="WhiteSmoke"
                            TextAlignment="Center" Height="228" Width="1023" RenderTransformOrigin="0.499,0.321" IsEnabled="False" FontFamily="Castellar"/>
-                <Button Content="STRAT"
+                <Button Content="START"
                         FontSize="40"
                         Background="White"
                         Foreground="Black"

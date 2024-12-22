@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace Tetris
 {
@@ -46,6 +47,8 @@ namespace Tetris
         private int maxDelay = 1500;
         private int mindelay = 100;
         private int delayDecrease = 70;
+        private bool isMultiplayer = false;
+        private static TCPSocket tcp = new TCPSocket();
 
         // The game's state.
         private GameState gameState = new GameState();
@@ -198,6 +201,7 @@ namespace Tetris
         // Resets the game and starts a new session when "Play Again" is clicked.
         private async void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
+            if(isMultiplayer && tcp.TCPConnected())
             gameState = new GameState();
             StartPage.Visibility = Visibility.Hidden;
             GameOverMenu.Visibility = Visibility.Hidden;
@@ -209,11 +213,11 @@ namespace Tetris
         {
             try
             {
-                TCPSocket tcp = new TCPSocket();
                 tcp.TCPlisten();
                 MessageBox.Show("Hosted");
                 Connect.IsEnabled = false;
                 Accept.IsEnabled = false;
+                isMultiplayer = true;
             }
             catch (Exception)
             {
@@ -232,11 +236,11 @@ namespace Tetris
             try
             {
                 string IP = IPAddressTextBox.Text;
-                TCPSocket tcp = new TCPSocket();
                 tcp.TCPconnect(IP);
                 MessageBox.Show("Joined");
                 Connect.IsEnabled = false;
                 Accept.IsEnabled = false;
+                isMultiplayer = true;
             }
             catch (Exception)
             {
