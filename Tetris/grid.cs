@@ -25,14 +25,20 @@ namespace Tetris
             column = c;
             grid = new int[row, column];
         }
+        public bool IsInside(int r, int c)
+        {
+            return r >= 0 && r < Rows && c >= 0 && c < Columns;
+        }
 
         // Checks if a specific cell in the grid is empty (contains 0).
         public bool isempty(int r, int c)
         {
-            if (r >= 0 && r < row && c >= 0 && c < column) // Ensure indices are within bounds.
+            /*if (r >= 0 && r < row && c >= 0 && c < column) // Ensure indices are within bounds.
                 if (grid[r, c] == 0)
                     return true;
-            return false;
+            return false;*/
+            return IsInside(r, c) && grid[r, c] == 0;
+        
         }
 
         // Checks if an entire row is empty (all cells in the row contain 0).
@@ -69,6 +75,7 @@ namespace Tetris
             {
                 grid[r + rowcount, c] = grid[r, c];
             }
+            Clear(r);
         }
 
         // Clears all full rows in the grid, moves rows above down as needed,
@@ -86,7 +93,6 @@ namespace Tetris
                 else if (clearcount > 0) // If rows have been cleared above, move current row down.
                 {
                     MoveDown(r, clearcount);
-                    Clear(r); // Clear the moved-down row.
                 }
             }
             return clearcount;
