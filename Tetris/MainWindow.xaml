@@ -75,7 +75,7 @@
                    FontStyle="Italic"
                    FontSize="30"
                    Foreground="White"
-                   TextAlignment="Center" Grid.ColumnSpan="3" />
+                   TextAlignment="Center" Grid.ColumnSpan="3" FontFamily="BIZ UDPGothic" />
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
@@ -86,7 +86,7 @@
                        FontSize="30"
                        FontWeight="Bold"
                        TextAlignment="Center" 
-                       Foreground="White"/>
+                       Foreground="White" FontFamily="BIZ UDPGothic"/>
             <Image x:Name="HoldImage"
                    Margin="20"
                    Width="125"
@@ -102,7 +102,7 @@
                        FontWeight="Bold"
                        FontSize="30"
                     TextAlignment="Center" 
-                    Foreground="White"/>
+                    Foreground="White" FontFamily="BIZ UDPGothic"/>
             <Image x:Name="NextImage"
                    Margin="20"
                    Width="125" />
@@ -121,7 +121,7 @@
             Width="150"
             Height="40"
             Click="Quit"
-            Content="QUIT" />
+            Content="QUIT" FontFamily="BIZ UDPGothic" />
 
 
         <Grid x:Name="GameOverMenu"
@@ -153,9 +153,9 @@
                         />
             </StackPanel>
         </Grid>
-		
-        
-        
+
+
+
         <Grid x:Name="StartPage"
               Grid.RowSpan="2"
               Grid.ColumnSpan="3"
@@ -166,18 +166,17 @@
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <TextBlock Text="T E T R I S"
-                           FontSize="180"
+                           FontSize="172"
                            FontWeight="Heavy"
                            Foreground="WhiteSmoke"
-                           Margin="0,0,0,20"
-                           TextAlignment="Center"/>
+                           TextAlignment="Center" Height="228" Width="1023" RenderTransformOrigin="0.499,0.321" IsEnabled="False" FontFamily="Castellar"/>
                 <Button Content="STRAT"
                         FontSize="40"
                         Background="White"
                         Foreground="Black"
                         Margin="0,20"
                         Padding="5"
-                        Click="PlayAgain_Click"/>
+                        Click="PlayAgain_Click" Height="66" FontFamily="BIZ UDPGothic"/>
             </StackPanel>
             <Border CornerRadius="10"
                 Padding="10"
@@ -186,7 +185,7 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Center"
                 Margin="0,0,0,50">
-                    
+
 
                 <StackPanel>
                     <TextBlock 
@@ -194,7 +193,7 @@
                         FontSize="30"
                         FontWeight="DemiBold"
                         Foreground="Black"
-                        TextAlignment="Center"/>                
+                        TextAlignment="Center" FontFamily="BIZ UDPGothic" Height="38"/>
                     <TextBox x:Name="IPAddressTextBox" 
                      TextAlignment="Center" Width="auto" TextChanged="IPAddressTextBox_TextChanged"
                      Foreground="#cc000000" Padding="10"
@@ -205,12 +204,12 @@
                         Width="240"
                         IsEnabled="False"
                         Click="Join_Connect"
-                        Content="CONNET" />
+                        Content="CONNET" FontFamily="BIZ UDPGothic" Height="40" />
                         <Button x:Name="Accept"
                         Padding="10"
                         Width="240"
                         Click="Host_Connect"
-                        Content="HOST" />
+                        Content="HOST" FontFamily="BIZ UDPGothic" />
                     </StackPanel>
                 </StackPanel>
             </Border>
