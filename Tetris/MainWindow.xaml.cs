@@ -104,11 +104,11 @@ namespace Tetris
         {
             foreach (Position p in block.TilePositions())
             {
-                if (p.Row >= 0) // Only draw tiles within the visible grid.
-                {
+                //if (p.Row >= 0) // Only draw tiles within the visible grid.
+                //{
                     imageControls[p.Row,p.Column].Opacity =1;
                     imageControls[p.Row, p.Column].Source = tileImages[block.Id];
-                }
+                //}
             }
         }
 
@@ -158,6 +158,13 @@ namespace Tetris
             Draw(gameState);
             while (!gameState.GameOver)
             {
+                int delay = Math.Max(mindelay, maxDelay - (gameState.Score * delayDecrease));
+                await Task.Delay(delay);
+                gameState.MoveBlockDown();
+                Draw(gameState);
+            }
+            /*while (!gameState.GameOver)
+            {
                 int delay = maxDelay;
                 int buffer = 0;
                 for(int i = 0; i<gameState.Score;i++)
@@ -167,7 +174,7 @@ namespace Tetris
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
-            }
+            }*/
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
