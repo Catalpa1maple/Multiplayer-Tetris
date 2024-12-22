@@ -58,14 +58,14 @@ namespace Tetris
         // Clears all cells in a specific row by setting them to 0.
         private void Clear(int r)
         {
-            for (int c; c < column; c++) // Loops through each column in the row.
+            for (int c=0; c < column; c++) // Loops through each column in the row.
                 grid[r, c] = 0;
         }
 
         // Moves the contents of a row down by a specified number of rows.
         private void MoveDown(int r, int rowcount)
         {
-            for (int c; c < column; c++) // Loops through each column in the row.
+            for (int c=0; c < column; c++) // Loops through each column in the row.
             {
                 grid[r + rowcount, c] = grid[r, c];
             }

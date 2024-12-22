@@ -87,7 +87,7 @@
                        FontWeight="Bold"
                        TextAlignment="Center" 
                        Foreground="White"/>
-            <Image x:Name="HoldIamge"
+            <Image x:Name="HoldImage"
                    Margin="20"
                    Width="125"
                    />
@@ -162,7 +162,7 @@
                         />
             </StackPanel>
         </Grid>
-
+		
         <Grid x:Name="ErrorPage"
             Background="#CC000000"
             Grid.RowSpan="2"
