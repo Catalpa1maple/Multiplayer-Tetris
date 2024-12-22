@@ -2,6 +2,102 @@ namespace Tetris
 {
     public class Grid
     {
+        private readonly int[,] grid;
+        public int row { get; }
+        public int column { get; }
+
+        public int this[int r, int c]
+        {
+            get => grid[r, c];
+            set => grid[r, c] = value;
+        }
+
+        public GameGrid(int rows, int columns)
+        {
+            row = rows;
+            column = columns;
+            grid = new int[rows, columns];
+        }
+
+        public bool IsInside(int r, int c)
+        {
+            return r >= 0 && r < Rows && c >= 0 && c < Columns;
+        }
+
+        public bool isempty(int r, int c)
+        {
+            return IsInside(r, c) && grid[r, c] == 0;
+        }
+
+        public bool isfull(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
+                if (grid[r, c] == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool IsRowEmpty(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
+                if (grid[r, c] != 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void Clear(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
+                grid[r, c] = 0;
+            }
+        }
+
+        private void MoveDown(int r, int numRows)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
+                grid[r + numRows, c] = grid[r, c];
+                grid[r, c] = 0;
+            }
+        }
+
+        public int ClearFullRow()
+        {
+            int cleared = 0;
+
+            for (int r = Rows-1; r >= 0; r--)
+            {
+                if (IsRowFull(r))
+                {
+                    ClearRow(r);
+                    cleared++;
+                }
+                else if (cleared > 0)
+                {
+                    MoveDown(r, cleared);
+                }
+            }
+
+            return cleared;
+        }
+    }
+}
+
+/*namespace Tetris
+{
+    public class Grid
+    {
         // 2D array representing the grid of the Tetris game.
         private int[,] grid;
 
@@ -37,7 +133,7 @@ namespace Tetris
                 if (grid[r, c] == 0)
                     return true;
             return false;*/
-            return IsInside(r, c) && grid[r, c] == 0;
+            /*return IsInside(r, c) && grid[r, c] == 0;
         
         }
 
@@ -98,4 +194,4 @@ namespace Tetris
             return clearcount;
         }
     }
-}
+}*/

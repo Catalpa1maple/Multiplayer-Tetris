@@ -1,4 +1,4 @@
-/*namespace Tetris
+namespace Tetris
 {
     public class GameState
     {
@@ -193,7 +193,7 @@
             PlaceBlock();
         }
     }
-}*/
+}
 namespace Tetris
 {
     public class GameState
