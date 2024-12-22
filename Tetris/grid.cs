@@ -27,7 +27,7 @@ namespace Tetris
         }
         public bool IsInside(int r, int c)
         {
-            return r >= 0 && r < Rows && c >= 0 && c < Columns;
+            return r >= 0 && r < row && c >= 0 && c < column;
         }
 
         // Checks if a specific cell in the grid is empty (contains 0).
