@@ -16,27 +16,27 @@ namespace Tetris
         // Array of images for grid tiles representing different block types.
         private readonly ImageSource[] tileImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("Images/TileEmpty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TileCyan.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TileBlue.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TileOrange.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TileYellow.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TileGreen.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TilePurple.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/TileRed.png", UriKind.Relative))
+            new BitmapImage(new Uri("assets/TileEmpty.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileCyan.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileBlue.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileOrange.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileYellow.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileGreen.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TilePurple.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileRed.png", UriKind.Relative))
         };
 
         // Array of images for displaying the block queue and held block.
         private ImageSource[] blockImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("Images/Block-Empty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-I.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-J.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-L.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-O.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-S.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-T.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Images/Block-Z.png", UriKind.Relative))
+            new BitmapImage(new Uri("assets/Block-Empty.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-I.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-J.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-L.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-O.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-S.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-T.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/Block-Z.png", UriKind.Relative))
         };
 
         // 2D array to hold the Image controls for the game grid.
@@ -53,9 +53,36 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
+            imageControls = SetupGameCanvas(gameState.GameGrid);
+        }
+        
+
+        // Sets up the game canvas with a grid of Image controls.
+        private Image[,] SetupGameCanvas(Grid grid)
+        {
+            Image[,] imageControls = new Image[grid.row, grid.column];
+            int cellSize = 25;
+
+            for (int r = 0; r < grid.row; r++)
+            {
+                for (int c = 0; c < grid.column; c++)
+                {
+                    Image imageControl = new Image
+                    {
+                        Width = cellSize,
+                        Height = cellSize,
+                    };
+
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
+                    Canvas.SetLeft(imageControl, c * cellSize);
+                    GameCanvas.Children.Add(imageControl);
+                    imageControls[r, c] = imageControl;
+                }
+            }
+
+            return imageControls;
         }
 
-        // Draws the current game grid.
         private void DrawGrid(Grid grid)
         {
             for (int r = 0; r < grid.row; r++)
@@ -111,32 +138,6 @@ namespace Tetris
                 imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
                 imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
             }
-        }
-
-        // Sets up the game canvas with a grid of Image controls.
-        private Image[,] SetupGameCanvas(Grid grid)
-        {
-            Image[,] imageControls = new Image[grid.row, grid.column];
-            int cellSize = 25;
-
-            for (int r = 0; r < grid.row; r++)
-            {
-                for (int c = 0; c < grid.column; c++)
-                {
-                    Image imageControl = new Image
-                    {
-                        Width = cellSize,
-                        Height = cellSize,
-                    };
-
-                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
-                    Canvas.SetLeft(imageControl, c * cellSize);
-                    GameCanvas.Children.Add(imageControl);
-                    imageControls[r, c] = imageControl;
-                }
-            }
-
-            return imageControls;
         }
 
         // Handles user input via keyboard.
