@@ -73,7 +73,7 @@ namespace Tetris
                         Height = cellSize
                     };
 
-                    Canvas.SetTop(imageControl, (r - 2) * cellSize );
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
                     Canvas.SetLeft(imageControl, c * cellSize);
                     GameCanvas.Children.Add(imageControl);
                     imageControls[r, c] = imageControl;
@@ -122,18 +122,6 @@ namespace Tetris
         {
             HoldImage.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
         }
-
-        // Combines all drawing operations.
-        private void Draw(GameState gameState)
-        {
-            DrawGrid(gameState.GameGrid);
-            DrawGhostBlock(gameState.CurrentBlock);
-            DrawBlock(gameState.CurrentBlock);
-            DrawNextBlock(gameState.BlockQueue);
-            DrawHeldBlock(gameState.HeldBlock);
-            ScoreText.Text = $"You now have {gameState.Score} marks.";
-        }
-
         // Draws the ghost block indicating where the block would land.
         private void DrawGhostBlock(Block block)
         {
@@ -151,6 +139,18 @@ namespace Tetris
                 //}
             }
         }
+        // Combines all drawing operations.
+        private void Draw(GameState gameState)
+        {
+            DrawGrid(gameState.GameGrid);
+            DrawGhostBlock(gameState.CurrentBlock);
+            DrawBlock(gameState.CurrentBlock);
+            DrawNextBlock(gameState.BlockQueue);
+            DrawHeldBlock(gameState.HeldBlock);
+            ScoreText.Text = $"You now have {gameState.Score} marks.";
+        }
+
+        
 
         // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
