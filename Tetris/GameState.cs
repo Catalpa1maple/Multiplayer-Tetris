@@ -57,7 +57,7 @@ namespace Tetris
             foreach (Position p in currentBlock.TilePositions())
             {
                 // Allow tiles to spawn above the grid (row < 0).
-                if (p.Row >= 0 && (!GameGrid.isempty(p.Row, p.Column) || p.Column < 0 || p.Column >= GameGrid.column))
+                if (!GameGrid.isempty(p.Row, p.Column))
                 {
                     return false;
                 }
@@ -136,7 +136,7 @@ namespace Tetris
         {
             foreach (Position p in currentBlock.TilePositions())
             {
-                if (p.Row >= 0) // Only update the grid for rows within bounds.
+                //if (p.Row >= 0) // Only update the grid for rows within bounds.
                 GameGrid[p.Row, p.Column] = currentBlock.Id; // Place the block tiles in the grid.
             }
 

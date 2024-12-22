@@ -45,7 +45,7 @@ namespace Tetris
         // Timing and game delay settings.
         private int maxDelay = 1500;
         private int mindelay = 100;
-        private int delayDecrease = 140;
+        private int delayDecrease = 70;
 
         // The game's state.
         private GameState gameState = new GameState();
@@ -70,10 +70,10 @@ namespace Tetris
                     Image imageControl = new Image
                     {
                         Width = cellSize,
-                        Height = cellSize,
+                        Height = cellSize
                     };
 
-                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize + 20);
                     Canvas.SetLeft(imageControl, c * cellSize);
                     GameCanvas.Children.Add(imageControl);
                     imageControls[r, c] = imageControl;
@@ -90,6 +90,7 @@ namespace Tetris
                 for (int c = 0; c < grid.column; c++)
                 {
                     int id = grid[r, c];
+                    imageControls[r,c].Opacity =1;
                     imageControls[r, c].Source = tileImages[id];
                 }
             }
@@ -102,6 +103,7 @@ namespace Tetris
             {
                 if (p.Row >= 0) // Only draw tiles within the visible grid.
                 {
+                    imageControls[r,c].Opacity =1;
                     imageControls[p.Row, p.Column].Source = tileImages[block.Id];
                 }
             }
@@ -148,12 +150,12 @@ namespace Tetris
             int dropDistance = gameState.BlockDropDistance();
             foreach (Position p in block.TilePositions())
             {
-                int ghostRow = p.Row + dropDistance;
-                if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
-                {
+                //int ghostRow = p.Row + dropDistance;
+                //if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
+                //{
                     imageControls[ghostRow, p.Column].Opacity = 0.25; // Set lower opacity for ghost blocks.
                     imageControls[ghostRow, p.Column].Source = tileImages[block.Id];
-                }
+                //}
             }
         }
 
@@ -196,6 +198,7 @@ namespace Tetris
         // Starts the game loop when the canvas is loaded.
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
+            
             await GameLoop();
         }
 
@@ -207,7 +210,7 @@ namespace Tetris
             GameOverMenu.Visibility = Visibility.Hidden;
             await GameLoop();
         }
-
+ 
         // Sets up a host connection for multiplayer.
         private void Host_Connect(object sender, RoutedEventArgs e)
         {
