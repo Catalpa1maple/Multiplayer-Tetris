@@ -153,7 +153,7 @@ namespace Tetris
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
          // Main game loop.
-        /*private async Task GameLoop()
+        private async Task GameLoop()
         {
             Draw(gameState);
             while (!gameState.GameOver)
@@ -170,22 +170,8 @@ namespace Tetris
             }
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
-        }*/
-        private async Task GameLoop()
-        {
-            Draw(gameState);
-
-            while (!gameState.GameOver)
-            {
-                int delay = Math.Max(mindelay, maxDelay - (gameState.Score * delayDecrease));
-                await Task.Delay(delay);
-                gameState.MoveBlockDown();
-                Draw(gameState);
-            }
-
-            GameOverMenu.Visibility = Visibility.Visible;
-            FinalScoreText.Text = $"Score: {gameState.Score}";
         }
+        
         // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
