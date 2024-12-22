@@ -164,7 +164,7 @@ namespace Tetris
                     buffer += delayDecrease; 
                 delay -= buffer;
                 if(delay<mindelay) delay=mindelay;
-                await Task.Delay(delay);
+                await Task.Delay(500);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }
