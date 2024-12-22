@@ -42,7 +42,7 @@ namespace Tetris
             return true;
         }
 
-        public bool IsRowEmpty(int r)
+        public bool isrowempty(int r)
         {
             for (int c = 0; c < Columns; c++)
             {
