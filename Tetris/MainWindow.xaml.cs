@@ -252,11 +252,13 @@ namespace Tetris
                 {
 
                     Connect.IsEnabled = true;
+                    Connect.Cursor = Cursors.Hand;
 
                 }
                 else
                 {
                     Connect.IsEnabled = false;
+                    Connect.Cursor = Cursors.No;
 
                 }
             }

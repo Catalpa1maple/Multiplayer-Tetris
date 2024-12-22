@@ -27,10 +27,24 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="DarkSlateBlue"/>
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="Black"/>
+                                            <GradientStop Color="#FFFFFCFC" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="DarkCyan"/>
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="Black" Offset="0.045"/>
+                                            <GradientStop Color="#FFFFFEFE" Offset="0.984"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -202,14 +216,30 @@
                         <Button x:Name="Connect"
                         Padding="10"
                         Width="240"
+                        Cursor="Cross"
                         IsEnabled="False"
                         Click="Join_Connect"
-                        Content="CONNET" FontFamily="BIZ UDPGothic" Height="40" />
+                        Content="CONNET" FontFamily="BIZ UDPGothic" Height="40" >
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Black" Offset="1"/>
+                                    <GradientStop Color="White" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                         <Button x:Name="Accept"
                         Padding="10"
                         Width="240"
+                        Cursor="Hand"
                         Click="Host_Connect"
-                        Content="HOST" FontFamily="BIZ UDPGothic" />
+                        Content="HOST" FontFamily="BIZ UDPGothic">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Black" Offset="1"/>
+                                    <GradientStop Color="White" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </Border>
