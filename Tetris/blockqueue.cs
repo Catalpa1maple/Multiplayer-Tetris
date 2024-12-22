@@ -77,7 +77,7 @@ namespace Tetris
             return blocks[random.Next(blocks.Length)];
         }
 
-        public Block GetAndUpdate()
+        public Block GetandUpdate()
         {
             Block block = NextBlock;
 
