@@ -199,6 +199,7 @@ namespace Tetris
                 tcp.TCPlisten();
                 MessageBox.Show("Hosted");
                 Connect.IsEnabled = false;
+                Accept.IsEnabled = false;
             }
             catch (Exception)
             {
@@ -220,6 +221,7 @@ namespace Tetris
                 TCPSocket tcp = new TCPSocket();
                 tcp.TCPconnect(IP);
                 MessageBox.Show("Joined");
+                Connect.IsEnabled = false;
                 Accept.IsEnabled = false;
             }
             catch (Exception)

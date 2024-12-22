@@ -133,7 +133,7 @@
                         Padding="10"
                         Width="130"
                         Click="Host_Connect"
-                        Content="Accept" />
+                        Content="Host" />
                 </StackPanel>
             </StackPanel>
         </Border>
