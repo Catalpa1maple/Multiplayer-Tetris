@@ -43,9 +43,9 @@ namespace Tetris
         private Image[,] imageControls;
 
         // Timing and game delay settings.
-        private int maxDelay = 750;
-        private int mindelay = 50;
-        private int delayDecrease = 70;
+        private int maxDelay = 1500;
+        private int mindelay = 100;
+        private int delayDecrease = 140;
 
         // The game's state.
         private GameState gameState = new GameState();
@@ -96,14 +96,17 @@ namespace Tetris
         }
 
         // Draws the currently active block.
-        private void DrawBlock(Block block)
+       private void DrawBlock(Block block)
         {
             foreach (Position p in block.TilePositions())
             {
-                imageControls[p.Row, p.Column].Opacity = 1;
-                imageControls[p.Row, p.Column].Source = tileImages[block.Id];
+                if (p.Row >= 0) // Only draw tiles within the visible grid.
+                {
+                    imageControls[p.Row, p.Column].Source = tileImages[block.Id];
+                }
             }
         }
+
 
         // Draws the next block in the block queue.
         private void DrawNextBlock(BlockQueue blockQueue)
