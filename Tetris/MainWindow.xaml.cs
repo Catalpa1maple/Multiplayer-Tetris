@@ -61,7 +61,7 @@ namespace Tetris
         
 
         // Sets up the game canvas with a grid of Image controls.
-        private Image[,] SetupGameCanvas(Grid grid)
+        private Image[,] SetupGameCanvas(GameGrid grid)
         {
             Image[,] imageControls = new Image[grid.row, grid.column];
             int cellSize = 25;
@@ -86,7 +86,7 @@ namespace Tetris
             return imageControls;
         }
 
-        private void DrawGrid(Grid grid)
+        private void DrawGrid(GameGrid grid)
         {
             for (int r = 0; r < grid.row; r++)
             {
@@ -128,18 +128,12 @@ namespace Tetris
         // Draws the ghost block indicating where the block would land.
         private void DrawGhostBlock(Block block)
         {
-            // Clear any previous ghost blocks by iterating through the entire grid.
-            
-            // Draw the new ghost block.
             int dropDistance = gameState.BlockDropDistance();
+
             foreach (Position p in block.TilePositions())
             {
-                int ghostRow = p.Row + dropDistance;
-                //if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
-                //{
-                    imageControls[ghostRow, p.Column].Opacity = 0.25; // Set lower opacity for ghost blocks.
-                    imageControls[ghostRow, p.Column].Source = tileImages[block.Id];
-                //}
+                imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
+                imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
             }
         }
         // Combines all drawing operations.

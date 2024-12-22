@@ -1,104 +1,95 @@
 namespace Tetris
 {
-    public class Grid
+    public class GameGrid
     {
-        // 2D array representing the grid of the Tetris game.
-        private int[,] grid;
+        private readonly int[,] grid;
+        public int Rows { get; }
+        public int Columns { get; }
 
-        // Number of rows in the grid.
-        public int row { get; }
-
-        // Number of columns in the grid.
-        public int column { get; }
-
-        // Indexer to get or set the value at a specific row and column in the grid.
         public int this[int r, int c]
         {
-            get { return grid[r, c]; }
-            set { grid[r, c] = value; }
+            get => grid[r, c];
+            set => grid[r, c] = value;
         }
 
-        // Constructor to initialize the grid with a specific number of rows and columns.
-        public Grid(int r, int c)
+        public GameGrid(int rows, int columns)
         {
-            row = r;
-            column = c;
-            grid = new int[row, column];
-        }
-        public bool isinside(int r, int c)
-        {
-            return r >= 0 && r < row && c >= 0 && c < column;
+            Rows = rows;
+            Columns = columns;
+            grid = new int[rows, columns];
         }
 
-        // Checks if a specific cell in the grid is empty (contains 0).
-        public bool isempty(int r, int c)
+        public bool IsInside(int r, int c)
         {
-            /*if (r >= 0 && r < row && c >= 0 && c < column) // Ensure indices are within bounds.
+            return r >= 0 && r < Rows && c >= 0 && c < Columns;
+        }
+
+        public bool IsEmpty(int r, int c)
+        {
+            return IsInside(r, c) && grid[r, c] == 0;
+        }
+
+        public bool IsRowFull(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
                 if (grid[r, c] == 0)
-                    return true;
-            return false;*/
-            return isinside(r, c) && grid[r, c] == 0;
-        
-        }
-
-        // Checks if an entire row is empty (all cells in the row contain 0).
-        public bool isrowempty(int r)
-        {
-            for (int c = 0; c < column; c++)
-                //if (!isempty(r, c)) // If any cell in the row is not empty, return false.
-                if(grid[r,c]!=0)
+                {
                     return false;
-            return true;
-        }
-
-        // Checks if an entire row is full (no cells in the row contain 0).
-        public bool isfull(int r)
-        {
-            for (int c = 0; c < column; c++)
-            {
-                //if (isempty(r, c)) // If any cell in the row is empty, return false.
-                if(grid[r,c]==0)
-                    return false;
+                }
             }
+
             return true;
         }
 
-        // Clears all cells in a specific row by setting them to 0.
-        private void Clear(int r)
+        public bool IsRowEmpty(int r)
         {
-            for (int c=0; c < column; c++) // Loops through each column in the row.
+            for (int c = 0; c < Columns; c++)
+            {
+                if (grid[r, c] != 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void ClearRow(int r)
+        {
+            for (int c = 0; c < Columns; c++)
+            {
                 grid[r, c] = 0;
+            }
         }
 
-        // Moves the contents of a row down by a specified number of rows.
-        private void MoveDown(int r, int rowcount)
+        private void MoveRowDown(int r, int numRows)
         {
-            for (int c=0; c < column; c++) // Loops through each column in the row.
+            for (int c = 0; c < Columns; c++)
             {
-                grid[r + rowcount, c] = grid[r, c];
-                grid[r,c]=0;
+                grid[r + numRows, c] = grid[r, c];
+                grid[r, c] = 0;
             }
-            //Clear(r);
         }
 
-        // Clears all full rows in the grid, moves rows above down as needed,
-        // and returns the number of rows cleared.
-        public int ClearFullRow()
+        public int ClearFullRows()
         {
-            int clearcount = 0; // Counter for the number of cleared rows.
-            for (int r = row - 1; r >= 0; r--) // Start from the bottom row and move upward.
+            int cleared = 0;
+
+            for (int r = Rows-1; r >= 0; r--)
             {
-                if (isfull(r)) // Check if the row is full.
+                if (IsRowFull(r))
                 {
-                    clearcount++;
-                    Clear(r); // Clear the full row.
+                    ClearRow(r);
+                    cleared++;
                 }
-                else if (clearcount > 0) // If rows have been cleared above, move current row down.
+                else if (cleared > 0)
                 {
-                    MoveDown(r, clearcount);
+                    MoveRowDown(r, cleared);
                 }
             }
-            return clearcount;
+
+            return cleared;
         }
     }
 }
