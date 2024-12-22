@@ -207,6 +207,11 @@ namespace Tetris
         // Connects to a host for multiplayer.
         private void Join_Connect(object sender, RoutedEventArgs e)
         {
+            if(IPAddressTextBox.Text.Length == 0)
+            {
+                MessageBox.Show("Please enter an IP address");
+                return;
+            }
             try
             {
                 string IP = IPAddressTextBox.Text;
@@ -217,6 +222,20 @@ namespace Tetris
             catch (Exception)
             {
                 MessageBox.Show("Failed to join");
+            }
+        }
+
+        private int IPAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (IPAddressTextBox.Text.Length > 0)
+            {
+                Connect.IsEnabled = true;
+                return 1;
+            }
+            else
+            {
+                Accept.IsEnabled = false;
+                return 0;
             }
         }
     }
