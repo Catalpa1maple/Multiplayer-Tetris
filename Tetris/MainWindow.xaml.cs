@@ -158,8 +158,9 @@ namespace Tetris
             Draw(gameState);
             while (!gameState.GameOver)
             {
-                int newspeed = maxDelay - (gameState.Score * delayDecrease);
-                int delay = Math.Max(mindelay, newspeed);
+                //int newspeed = maxDelay - (gameState.Score * delayDecrease);
+                //int delay = Math.Max(mindelay, newspeed);
+                int delay = Math.Max(minDelay, maxDelay - (gameState.Score * delayDecrease));
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
