@@ -3,20 +3,23 @@ namespace Tetris
     public class GameState
     {
         private Block currentBlock;
+        private Block previousBlock; 
+        private Block tempBlock;
 
         public Block CurrentBlock
         {
             get => currentBlock;
             private set
             {
-                currentBlock = value;
-                currentBlock.Reset();
+                tempBlock = value;
+                tempBlock.Reset();
+                currentBlock = tempBlock;
 
                 for (int i = 0; i < 2; i++)
                 {
                     currentBlock.Move(1, 0);
-
-                    if (!BlockFits())
+                    bool fits = BlockFits();
+                    if (!fits)
                     {
                         currentBlock.Move(-1, 0);
                     }
@@ -37,19 +40,22 @@ namespace Tetris
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
             CanHold = true;
+            previousBlock = null;
         }
 
         private bool BlockFits()
         {
+            bool fits = true;
             foreach (Position p in CurrentBlock.TilePositions())
             {
-                if (!GameGrid.IsEmpty(p.Row, p.Column))
+                
+                bool isEmpty = GameGrid.IsEmpty(p.Row, p.Column);
+                if (!isEmpty)
                 {
-                    return false;
+                    fits = false;
                 }
             }
-
-            return true;
+            return fits;
         }
 
         public void HoldBlock()
@@ -67,8 +73,9 @@ namespace Tetris
             else
             {
                 Block tmp = CurrentBlock;
-                CurrentBlock = HeldBlock;
-                HeldBlock = tmp;
+                tempBlock = CurrentBlock;
+                CurrentBlock = tmp;
+                HeldBlock = tempBlock;
             }
 
             CanHold = false;
@@ -77,8 +84,8 @@ namespace Tetris
         public void RotateBlockCW()
         {
             CurrentBlock.RotateCW();
-
-            if (!BlockFits())
+            bool fits = BlockFits();
+            if (!fits)
             {
                 CurrentBlock.RotateCCW();
             }
@@ -87,8 +94,8 @@ namespace Tetris
         public void RotateBlockCCW()
         {
             CurrentBlock.RotateCCW();
-
-            if (!BlockFits())
+            bool fits = BlockFits();
+            if (!fits)
             {
                 CurrentBlock.RotateCW();
             }
@@ -97,8 +104,8 @@ namespace Tetris
         public void MoveBlockLeft()
         {
             CurrentBlock.Move(0, -1);
-
-            if (!BlockFits())
+           bool fits = BlockFits();
+            if (!fits)
             {
                 CurrentBlock.Move(0, 1);
             }
@@ -107,8 +114,8 @@ namespace Tetris
         public void MoveBlockRight()
         {
             CurrentBlock.Move(0, 1);
-
-            if (!BlockFits())
+            bool fits = BlockFits();
+            if (!fits)
             {
                 CurrentBlock.Move(0, -1);
             }
@@ -116,7 +123,7 @@ namespace Tetris
 
         private bool IsGameOver()
         {
-            return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
+            return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1)) || false;
         }
 
         private void PlaceBlock()
@@ -134,7 +141,8 @@ namespace Tetris
             }
             else
             {
-                CurrentBlock = BlockQueue.GetAndUpdate();
+                Block nextBlock = BlockQueue.GetAndUpdate();
+                CurrentBlock = nextBlock;
                 CanHold = true;
             }
         }
@@ -153,13 +161,13 @@ namespace Tetris
         private int TileDropDistance(Position p)
         {
             int drop = 0;
-
+            int maxDrop = GameGrid.Rows;
             while (GameGrid.IsEmpty(p.Row + drop + 1, p.Column))
             {
                 drop++;
             }
 
-            return drop;
+            return drop > maxDrop ? maxDrop : drop;
         }
 
         public int BlockDropDistance()
@@ -168,7 +176,8 @@ namespace Tetris
 
             foreach (Position p in CurrentBlock.TilePositions())
             {
-                drop = System.Math.Min(drop, TileDropDistance(p));
+                int distance = TileDropDistance(p);
+                drop = System.Math.Min(drop, distance);
             }
 
             return drop;
