@@ -12,7 +12,7 @@ namespace Tetris
             set => grid[r, c] = value;
         }
 
-        public GameGrid(int rows, int columns)
+        public Grid(int rows, int columns)
         {
             row = rows;
             column = columns;
