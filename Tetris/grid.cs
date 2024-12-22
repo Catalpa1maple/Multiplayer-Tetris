@@ -21,7 +21,7 @@ namespace Tetris
 
         public bool IsInside(int r, int c)
         {
-            return r >= 0 && r < Rows && c >= 0 && c < Columns;
+            return r >= 0 && r < row && c >= 0 && c < column;
         }
 
         public bool isempty(int r, int c)
@@ -31,7 +31,7 @@ namespace Tetris
 
         public bool isfull(int r)
         {
-            for (int c = 0; c < Columns; c++)
+            for (int c = 0; c < column; c++)
             {
                 if (grid[r, c] == 0)
                 {
@@ -44,7 +44,7 @@ namespace Tetris
 
         public bool isrowempty(int r)
         {
-            for (int c = 0; c < Columns; c++)
+            for (int c = 0; c < column; c++)
             {
                 if (grid[r, c] != 0)
                 {
@@ -57,7 +57,7 @@ namespace Tetris
 
         private void Clear(int r)
         {
-            for (int c = 0; c < Columns; c++)
+            for (int c = 0; c < column; c++)
             {
                 grid[r, c] = 0;
             }
@@ -65,7 +65,7 @@ namespace Tetris
 
         private void MoveDown(int r, int numRows)
         {
-            for (int c = 0; c < Columns; c++)
+            for (int c = 0; c < column; c++)
             {
                 grid[r + numRows, c] = grid[r, c];
                 grid[r, c] = 0;
@@ -76,11 +76,11 @@ namespace Tetris
         {
             int cleared = 0;
 
-            for (int r = Rows-1; r >= 0; r--)
+            for (int r = row-1; r >= 0; r--)
             {
-                if (IsRowFull(r))
+                if (isfull(r))
                 {
-                    ClearRow(r);
+                    Clear(r);
                     cleared++;
                 }
                 else if (cleared > 0)
