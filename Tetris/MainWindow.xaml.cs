@@ -227,16 +227,21 @@ namespace Tetris
 
         private void IPAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (IPAddressTextBox.Text.Length > 0)
+            if (Connect != null)
             {
-                Connect.IsEnabled = true;
-                
-            }
-            else
-            {
-                Accept.IsEnabled = false;
-                
+                if (IPAddressTextBox.Text.Length > 0)
+                {
+
+                    Connect.IsEnabled = true;
+
+                }
+                else
+                {
+                    Connect.IsEnabled = false;
+
+                }
             }
         }
+
     }
 }

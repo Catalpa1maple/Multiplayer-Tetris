@@ -119,18 +119,21 @@
                 Margin="0,0,0,50">
             <StackPanel>
                 <TextBox x:Name="IPAddressTextBox" Text="IP" 
-                     TextAlignment="Center" Width="auto"
+                     TextAlignment="Center" Width="auto" TextChanged="IPAddressTextBox_TextChanged"
                      Foreground="#cc000000" Padding="10"
                          Margin="0,0,0,10" TextChanged="IPAddressTextBox_TextChanged"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button x:Name="Connect"
                         Padding="10"
                         Width="130"
-                        Click="Join_Connect">Connect</Button>
+                        IsEnabled="False"
+                        Click="Join_Connect"
+                        Content="Connect" />
                     <Button x:Name="Accept"
                         Padding="10"
                         Width="130"
-                        Click="Host_Connect">Host</Button>
+                        Click="Host_Connect"
+                        Content="Accept" />
                 </StackPanel>
             </StackPanel>
         </Border>
