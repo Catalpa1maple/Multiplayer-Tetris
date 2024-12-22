@@ -4,7 +4,7 @@ namespace Tetris
     public class BlockQueue
     {
         // Array containing all possible block types.
-        private Block[] blocks = new Block[]
+        private readonly Block[] blocks = new Block[]
         {
             new IBlock(),
             new JBlock(),
@@ -16,25 +16,24 @@ namespace Tetris
         };
 
         // Random number generator for selecting blocks randomly.
-        private Random random = new Random();
+        private readonly Random random = new Random();
 
         // Holds the next block to be used in the game.
         public Block NextBlock { get; private set; }
-
+        // Constructor to initialize the queue with a random block as the next block.
+        public BlockQueue()
+        {
+            NextBlock = RandomBlock();
+        }
         // Selects a random block from the available block types.
         private Block RandomBlock()
         {
             return blocks[random.Next(blocks.Length)];
         }
 
-        // Constructor to initialize the queue with a random block as the next block.
-        public BlockQueue()
-        {
-            NextBlock = RandomBlock();
-        }
 
         // Returns the current next block and updates to a new random block.
-        /*public Block GetandUpdate()
+        public Block GetandUpdate()
         {
             Block block = NextBlock; // Store the current next block.
             //Ensure the new block is different from the previous one.
@@ -43,8 +42,8 @@ namespace Tetris
                 NextBlock = RandomBlock();
             }while (block.Id == NextBlock.Id);
             return block;
-        }*/
-        private Block previousBlock;
+        }
+        /*private Block previousBlock;
 
         public Block GetandUpdate()
         {
@@ -59,7 +58,7 @@ namespace Tetris
 
             previousBlock = block; // Update the previous block.
             return block;
-        }
+        }*/
 
     }
 }

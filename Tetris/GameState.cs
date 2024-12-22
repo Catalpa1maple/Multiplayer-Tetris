@@ -136,7 +136,7 @@ namespace Tetris
         {
             foreach (Position p in currentBlock.TilePositions())
             {
-                if (p.Row >= 0) // Only update the grid for rows within bounds.
+                //if (p.Row >= 0) // Only update the grid for rows within bounds.
                 GameGrid[p.Row, p.Column] = currentBlock.Id; // Place the block tiles in the grid.
             }
 

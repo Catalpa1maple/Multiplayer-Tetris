@@ -25,7 +25,7 @@ namespace Tetris
             column = c;
             grid = new int[row, column];
         }
-        public bool IsInside(int r, int c)
+        public bool isinside(int r, int c)
         {
             return r >= 0 && r < row && c >= 0 && c < column;
         }
@@ -37,7 +37,7 @@ namespace Tetris
                 if (grid[r, c] == 0)
                     return true;
             return false;*/
-            return IsInside(r, c) && grid[r, c] == 0;
+            return isinside(r, c) && grid[r, c] == 0;
         
         }
 
@@ -45,7 +45,8 @@ namespace Tetris
         public bool isrowempty(int r)
         {
             for (int c = 0; c < column; c++)
-                if (!isempty(r, c)) // If any cell in the row is not empty, return false.
+                //if (!isempty(r, c)) // If any cell in the row is not empty, return false.
+                if(grid[r,c]!=0)
                     return false;
             return true;
         }
@@ -55,7 +56,8 @@ namespace Tetris
         {
             for (int c = 0; c < column; c++)
             {
-                if (isempty(r, c)) // If any cell in the row is empty, return false.
+                //if (isempty(r, c)) // If any cell in the row is empty, return false.
+                if(grid[r,c]==0)
                     return false;
             }
             return true;
@@ -74,8 +76,9 @@ namespace Tetris
             for (int c=0; c < column; c++) // Loops through each column in the row.
             {
                 grid[r + rowcount, c] = grid[r, c];
+                grid[r,c]=0;
             }
-            Clear(r);
+            //Clear(r);
         }
 
         // Clears all full rows in the grid, moves rows above down as needed,
