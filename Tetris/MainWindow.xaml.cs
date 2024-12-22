@@ -63,12 +63,12 @@ namespace Tetris
         // Sets up the game canvas with a grid of Image controls.
         private Image[,] SetupGameCanvas(GameGrid grid)
         {
-            Image[,] imageControls = new Image[grid.row, grid.column];
+            Image[,] imageControls = new Image[grid.Rows, grid.Columns];
             int cellSize = 25;
 
             for (int r = 0; r < grid.row; r++)
             {
-                for (int c = 0; c < grid.column; c++)
+                for (int c = 0; c < grid.Columns; c++)
                 {
                     Image imageControl = new Image
                     {
@@ -88,9 +88,9 @@ namespace Tetris
 
         private void DrawGrid(GameGrid grid)
         {
-            for (int r = 0; r < grid.row; r++)
+            for (int r = 0; r < grid.Rows; r++)
             {
-                for (int c = 0; c < grid.column; c++)
+                for (int c = 0; c < grid.Columns; c++)
                 {
                     int id = grid[r, c];
                     imageControls[r,c].Opacity =1;
