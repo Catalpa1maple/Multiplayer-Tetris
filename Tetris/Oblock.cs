@@ -11,6 +11,6 @@ namespace Tetris
 
         protected override Position StartOffset => new Position(0, 4); // Starting offset for the O block.
 
-        protected override Position[][] Tiles => tiles; // Tile definitions for the O?block.
-????}
+        protected override Position[][] Tiles => tiles; // Tile definitions for the O block.
+    }
 }
