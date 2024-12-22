@@ -37,12 +37,11 @@ namespace Tetris
         public Block GetandUpdate()
         {
             Block block = NextBlock; // Store the current next block.
-            // Ensure the new block is different from the previous one.
-            /*do
+            //Ensure the new block is different from the previous one.
+            do
             {
                 NextBlock = RandomBlock();
-            } while (NextBlock!=null && NextBlock.Id == block.Id);*/
-                
+            } while (block.Id == NextBlock.Id);
             return block;
         }
     }
