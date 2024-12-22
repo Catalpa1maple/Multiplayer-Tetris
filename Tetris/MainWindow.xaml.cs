@@ -162,7 +162,7 @@ namespace Tetris
                 int buffer = 0;
                 for(int i = 0; i<gameState.Score;i++)
                     buffer += delayDecrease; 
-                delay =newspeed - buffer;
+                delay -= buffer;
                 if(delay<mindelay) delay=mindelay;
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
