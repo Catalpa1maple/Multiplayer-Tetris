@@ -138,24 +138,17 @@ namespace Tetris
         private void DrawGhostBlock(Block block)
         {
             // Clear any previous ghost blocks by iterating through the entire grid.
-            foreach (Image image in imageControls)
-            {
-                if (image.Opacity == 0.25) // Identify ghost blocks by their opacity.
-                {
-                    image.Opacity = 1; // Reset the opacity to normal.
-                    image.Source = tileImages[0]; // Reset the tile to empty.
-                }
-            }
+            
             // Draw the new ghost block.
             int dropDistance = gameState.BlockDropDistance();
             foreach (Position p in block.TilePositions())
             {
                 int ghostRow = p.Row + dropDistance;
-                if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
-                {
+                //if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
+                //{
                     imageControls[ghostRow, p.Column].Opacity = 0.25; // Set lower opacity for ghost blocks.
                     imageControls[ghostRow, p.Column].Source = tileImages[block.Id];
-                }
+                //}
             }
         }
 
@@ -185,7 +178,7 @@ namespace Tetris
             Draw(gameState);
             while (!gameState.GameOver)
             {
-                int newspeed = maxDelay - gameState.Score * delayDecrease;
+                int newspeed = maxDelay - (gameState.Score * delayDecrease);
                 int delay = Math.Max(mindelay, newspeed);
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
