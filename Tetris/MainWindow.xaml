@@ -188,7 +188,7 @@
                         Background="BlueViolet" 
                         Margin="0,20"
                         Padding="5"
-                        Click="StartAgain"
+                        Click="PlayAgain_Click"
                         />
             </StackPanel>
 

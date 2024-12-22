@@ -225,17 +225,17 @@ namespace Tetris
             }
         }
 
-        private int IPAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void IPAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (IPAddressTextBox.Text.Length > 0)
             {
                 Connect.IsEnabled = true;
-                return 1;
+                
             }
             else
             {
                 Accept.IsEnabled = false;
-                return 0;
+                
             }
         }
     }
