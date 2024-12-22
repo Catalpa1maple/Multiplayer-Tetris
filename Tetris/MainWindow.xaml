@@ -118,7 +118,7 @@
                 HorizontalAlignment="Center"
                 Margin="0,0,0,50">
             <StackPanel>
-                <TextBox x:Name="IPAddressTextBox" Text="IP" 
+                <TextBox x:Name="IPAddressTextBox" 
                      TextAlignment="Center" Width="auto" TextChanged="IPAddressTextBox_TextChanged"
                      Foreground="#cc000000" Padding="10"
                          Margin="0,0,0,10"/>
