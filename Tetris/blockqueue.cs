@@ -34,15 +34,32 @@ namespace Tetris
         }
 
         // Returns the current next block and updates to a new random block.
-        public Block GetandUpdate()
+        /*public Block GetandUpdate()
         {
             Block block = NextBlock; // Store the current next block.
             //Ensure the new block is different from the previous one.
-            //do
-            //{
+            do
+            {
                 NextBlock = RandomBlock();
-            //}while (block.Id == NextBlock.Id);
+            }while (block.Id == NextBlock.Id);
+            return block;
+        }*/
+        private Block previousBlock;
+
+        public Block GetandUpdate()
+        {
+            Block block = NextBlock; // Store the current block.
+            NextBlock = RandomBlock(); // Pick a new block.
+
+            // Avoid consecutive repetition only.
+            while (previousBlock != null && NextBlock.Id == previousBlock.Id)
+            {
+                NextBlock = RandomBlock();
+            }
+
+            previousBlock = block; // Update the previous block.
             return block;
         }
+
     }
 }
