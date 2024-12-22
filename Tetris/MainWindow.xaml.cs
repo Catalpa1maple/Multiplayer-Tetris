@@ -103,7 +103,7 @@ namespace Tetris
             {
                 if (p.Row >= 0) // Only draw tiles within the visible grid.
                 {
-                    imageControls[r,c].Opacity =1;
+                    imageControls[p.Row,p.Column].Opacity =1;
                     imageControls[p.Row, p.Column].Source = tileImages[block.Id];
                 }
             }
@@ -150,12 +150,12 @@ namespace Tetris
             int dropDistance = gameState.BlockDropDistance();
             foreach (Position p in block.TilePositions())
             {
-                //int ghostRow = p.Row + dropDistance;
-                //if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
-                //{
+                int ghostRow = p.Row + dropDistance;
+                if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
+                {
                     imageControls[ghostRow, p.Column].Opacity = 0.25; // Set lower opacity for ghost blocks.
                     imageControls[ghostRow, p.Column].Source = tileImages[block.Id];
-                //}
+                }
             }
         }
 
