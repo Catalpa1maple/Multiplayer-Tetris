@@ -43,7 +43,7 @@ namespace Tetris
                 NextBlock = RandomBlock();
             } while (block.Id == NextBlock.Id);
             return block;
-        }
+        }//sbfhcsbhkbsdkbdsh
     }
 }*/
 using System;
