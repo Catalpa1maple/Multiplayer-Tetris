@@ -14,7 +14,6 @@ namespace Tetris
             new TBlock(),
             new ZBlock()
         };
-
         private readonly Random random = new Random();
         private readonly Random randomWrapper;
         private Block lastBlock;
@@ -36,7 +35,6 @@ namespace Tetris
         public Block GetAndUpdate()
         {
             Block blockToReturn = NextBlock;
-
             do
             {
                 NextBlock = RandomBlock();
@@ -46,7 +44,6 @@ namespace Tetris
                 }
             }
             while (blockToReturn.Id == NextBlock.Id);
-
             lastBlock = NextBlock;
             return blockToReturn;
         }
