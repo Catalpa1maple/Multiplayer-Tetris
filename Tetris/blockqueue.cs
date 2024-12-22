@@ -38,10 +38,10 @@ namespace Tetris
         {
             Block block = NextBlock; // Store the current next block.
             // Ensure the new block is different from the previous one.
-            do
+            /*do
             {
                 NextBlock = RandomBlock();
-            } while (NextBlock!=null && NextBlock.Id == block.Id);
+            } while (NextBlock!=null && NextBlock.Id == block.Id);*/
                 
             return block;
         }
