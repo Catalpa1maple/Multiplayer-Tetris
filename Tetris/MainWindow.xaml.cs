@@ -200,11 +200,29 @@ namespace Tetris
         // Resets the game and starts a new session when "Play Again" is clicked.
         private async void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
-            if(isMultiplayer && tcp.TCPConnected())
-            gameState = new GameState();
-            StartPage.Visibility = Visibility.Hidden;
-            GameOverMenu.Visibility = Visibility.Hidden;
-            await GameLoop();
+            if (isMultiplayer)
+            {
+                if (tcp.TCPConnected())
+                {
+                    gameState = new GameState();
+                    StartPage.Visibility = Visibility.Hidden;
+                    GameOverMenu.Visibility = Visibility.Hidden;
+                    await GameLoop();
+                }
+                else
+                {
+                    MessageBox.Show("You don't have multiplayer connection now (Switch to single player)");
+                    isMultiplayer = false;
+                }
+            }
+            else 
+            {
+                gameState = new GameState();
+                StartPage.Visibility = Visibility.Hidden;
+                GameOverMenu.Visibility = Visibility.Hidden;
+                await GameLoop();
+            }
+            
         }
  
         // Sets up a host connection for multiplayer.
