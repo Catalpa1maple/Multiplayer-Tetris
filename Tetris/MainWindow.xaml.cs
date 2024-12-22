@@ -66,7 +66,7 @@ namespace Tetris
             Image[,] imageControls = new Image[grid.Rows, grid.Columns];
             int cellSize = 25;
 
-            for (int r = 0; r < grid.row; r++)
+            for (int r = 0; r < grid.Rows; r++)
             {
                 for (int c = 0; c < grid.Columns; c++)
                 {
