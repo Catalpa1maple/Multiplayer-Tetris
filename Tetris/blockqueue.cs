@@ -41,8 +41,8 @@ namespace Tetris
             /*do
             {
                 NextBlock = RandomBlock();
-            } while (block.Id == NextBlock.Id);
-            return block;*/
+            } while (block.Id == NextBlock.Id);*/
+            return block;
         }
     }
 }
