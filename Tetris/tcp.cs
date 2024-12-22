@@ -11,6 +11,10 @@ public struct Message{
     public uint lineEliminated;
 }
 
+public class ConnectionClosedException : Exception{
+    
+}
+
 class TCPSocket{
     private Socket? sockfd;
     private Socket? listener; 
@@ -75,13 +79,17 @@ class TCPSocket{
     public Message TCPupdate(Message message){
         try{
             if(sockfd!=null){
+                int r;
                 byte[] sendBuffer=structToBinary(message);
                 byte[] recvBuffer=new byte[256];
                 //send
-                sockfd.Send(sendBuffer);
+                r=sockfd.Send(sendBuffer);
+                if(r==0) throw new ConnectionClosedException();
                 //recv
-                sockfd.Receive(recvBuffer);
-                message=BinaryToStruct(recvBuffer);
+                r=sockfd.Receive(recvBuffer);
+                if(r==0) throw new ConnectionClosedException();
+                
+                message =BinaryToStruct(recvBuffer);
             }
             return message;
         }catch{
@@ -116,4 +124,16 @@ class TCPSocket{
         }
     } 
 
+    public void TCPClose(){
+        sockfd?.Close();
+        listener?.Close();
+    }
+
+    public bool TCPConnected(){
+        if (sockfd != null && sockfd.Connected)
+        {
+            return true;
+        }
+        else return false;
+    }
 }

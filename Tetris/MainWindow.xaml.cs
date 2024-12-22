@@ -132,11 +132,25 @@ namespace Tetris
         // Draws the ghost block indicating where the block would land.
         private void DrawGhostBlock(Block block)
         {
+            // Clear any previous ghost blocks by iterating through the entire grid.
+            foreach (Image image in imageControls)
+            {
+                if (image.Opacity == 0.25) // Identify ghost blocks by their opacity.
+                {
+                    image.Opacity = 1; // Reset the opacity to normal.
+                    image.Source = tileImages[0]; // Reset the tile to empty.
+                }
+            }
+            // Draw the new ghost block.
             int dropDistance = gameState.BlockDropDistance();
             foreach (Position p in block.TilePositions())
             {
-                imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
-                imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
+                int ghostRow = p.Row + dropDistance;
+                if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
+                {
+                    imageControls[ghostRow, p.Column].Opacity = 0.25; // Set lower opacity for ghost blocks.
+                    imageControls[ghostRow, p.Column].Source = tileImages[block.Id];
+                }
             }
         }
 
