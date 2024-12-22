@@ -14,9 +14,9 @@ namespace Tetris{
         public override int Id=>2;
 
         // Defines the starting offset for the "J" block when it spawns on the grid.
-        protected override Position StartOffset=> new Position(0,3);
-
+        //protected override Position StartOffset=> new Position(0,3);
+        protected override Position StartOffset=> new (0,3);
         // Provides access to the rotation states of the "J" block.
-        protected override Position[][] Tiles => tiles;
+        //protected override Position[][] Tiles => tiles;
     }
 }
