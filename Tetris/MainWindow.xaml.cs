@@ -249,5 +249,10 @@ namespace Tetris
             }
         }
 
+        private void Quit(object sender, RoutedEventArgs e)
+        {
+            StartPage.Visibility = Visibility.Visible;
+        }
+
     }
 }
