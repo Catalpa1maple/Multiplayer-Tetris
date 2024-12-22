@@ -152,8 +152,21 @@ namespace Tetris
             DrawHeldBlock(gameState.HeldBlock);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
-
-        
+         // Main game loop.
+        private async Task GameLoop()
+        {
+            Draw(gameState);
+            while (!gameState.GameOver)
+            {
+                int newspeed = maxDelay - (gameState.Score * delayDecrease);
+                int delay = Math.Max(mindelay, newspeed);
+                await Task.Delay(delay);
+                gameState.MoveBlockDown();
+                Draw(gameState);
+            }
+            GameOverMenu.Visibility = Visibility.Visible;
+            FinalScoreText.Text = $"You gained {gameState.Score} marks.";
+        }
 
         // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -175,21 +188,7 @@ namespace Tetris
             Draw(gameState);
         }
 
-        // Main game loop.
-        private async Task GameLoop()
-        {
-            Draw(gameState);
-            while (!gameState.GameOver)
-            {
-                int newspeed = maxDelay - (gameState.Score * delayDecrease);
-                int delay = Math.Max(mindelay, newspeed);
-                await Task.Delay(delay);
-                gameState.MoveBlockDown();
-                Draw(gameState);
-            }
-            GameOverMenu.Visibility = Visibility.Visible;
-            FinalScoreText.Text = $"You gained {gameState.Score} marks.";
-        }
+       
 
         // Starts the game loop when the canvas is loaded.
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
