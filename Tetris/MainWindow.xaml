@@ -11,7 +11,7 @@
         FontFamily="Inter" FontSize="28"
         KeyDown="Window_KeyDown"
         >
-    
+
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
@@ -41,7 +41,6 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
     </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -109,35 +108,6 @@
                    Width="125" />
         </StackPanel>
 
-        <Border CornerRadius="10"
-                Grid.Row="1"
-                Grid.Column="0"
-                Padding="10"
-                Background="WhiteSmoke"
-                Width="300"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Center"
-                Margin="0,0,0,50">
-            <StackPanel>
-                <TextBox x:Name="IPAddressTextBox" 
-                     TextAlignment="Center" Width="auto" TextChanged="IPAddressTextBox_TextChanged"
-                     Foreground="#cc000000" Padding="10"
-                         Margin="0,0,0,10"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="Connect"
-                        Padding="10"
-                        Width="130"
-                        IsEnabled="False"
-                        Click="Join_Connect"
-                        Content="Connect" />
-                    <Button x:Name="Accept"
-                        Padding="10"
-                        Width="130"
-                        Click="Host_Connect"
-                        Content="Host" />
-                </StackPanel>
-            </StackPanel>
-        </Border>
 
         <Grid x:Name="GameOverMenu"
               Background="#CC000000"
@@ -168,35 +138,64 @@
             </StackPanel>
         </Grid>
 		
-        <Grid x:Name="ErrorPage"
-            Background="#CC000000"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="3"
-            Visibility="Hidden"
-              >
+        <Grid x:Name="StartPage"
+              Grid.RowSpan="2"
+              Grid.ColumnSpan="3"
+              Visibility="Visible">
+            <Grid.Background>
+                <ImageBrush ImageSource="Assets/Background.jpeg" />
+            </Grid.Background>
             <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center" >
-                <TextBlock Text="Error !!!"
-                           FontSize="40"
-                           Foreground="Red"
-                           Margin="0,0,0,20" 
+                        VerticalAlignment="Center">
+                <TextBlock Text="T E T R I S"
+                           FontSize="180"
+                           FontWeight="Heavy"
+                           Foreground="WhiteSmoke"
+                           Margin="0,0,0,20"
                            TextAlignment="Center"/>
-
-                <TextBlock x:Name="ErrorText"
-                    FontSize="36"
-                    Foreground="Red"
-                    Margin="0,0,0,20" 
-                    TextAlignment="Center"/>
-
-                <Button Content="Start Again"
-                        Background="BlueViolet" 
+                <Button Content="STRAT"
+                        FontSize="40"
+                        Background="White"
+                        Foreground="Black"
                         Margin="0,20"
                         Padding="5"
-                        Click="PlayAgain_Click"
-                        />
+                        Click="PlayAgain_Click"/>
             </StackPanel>
+            <Border CornerRadius="10"
+                Padding="10"
+                Background="WhiteSmoke"
+                Width="500"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,50">
+                    
 
-
+                <StackPanel>
+                    <TextBlock 
+                        Text="IP Address of Your Rival"
+                        FontSize="30"
+                        FontWeight="DemiBold"
+                        Foreground="Black"
+                        TextAlignment="Center"/>                
+                    <TextBox x:Name="IPAddressTextBox" 
+                     TextAlignment="Center" Width="auto" TextChanged="IPAddressTextBox_TextChanged"
+                     Foreground="#cc000000" Padding="10"
+                         Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="Connect"
+                        Padding="10"
+                        Width="240"
+                        IsEnabled="False"
+                        Click="Join_Connect"
+                        Content="CONNET" />
+                        <Button x:Name="Accept"
+                        Padding="10"
+                        Width="240"
+                        Click="Host_Connect"
+                        Content="HOST" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </Grid>
 
 
