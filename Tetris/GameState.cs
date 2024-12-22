@@ -13,14 +13,14 @@ namespace Tetris
             {
                 currentBlock = value;
                 currentBlock.Reset();
-                for (int i = 0; i < 2; i++) // Attempt to move the block down two rows.
-                {
+                //for (int i = 0; i < 2; i++) // Attempt to move the block down two rows.
+                //{
                     currentBlock.Move(1, 0);
                     if (!BlockFits()) // If the block doesn't fit, move it back up.
                     {
                         currentBlock.Move(-1, 0);
                     }
-                }
+                //}
             }
         }
 
