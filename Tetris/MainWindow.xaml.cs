@@ -146,29 +146,28 @@ namespace Tetris
             DrawHeldBlock(gameState.HeldBlock);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
+        private int CalculateDelay(int score)
+        {
+            // Added unnecessary steps to calculate delay with redundant logic
+            int delay = maxDelay;
+            int scoreAdjustment = 0;
+            for(int i=0;i<score;i++)
+              scoreAdjustment += delayDecrease;
+            delay -= scoreAdjustment;
+
+            return Math.Max(mindelay, delay);
+        }
          // Main game loop.
         private async Task GameLoop()
         {
             Draw(gameState);
             while (!gameState.GameOver)
             {
-                int delay = Math.Max(mindelay, maxDelay - (gameState.Score * delayDecrease));
+                int delay = CalculateDelay(gameState.Score);
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }
-            /*while (!gameState.GameOver)
-            {
-                int delay = maxDelay;
-                int buffer = 0;
-                for(int i = 0; i<gameState.Score;i++)
-                    buffer += delayDecrease; 
-                delay -= buffer;
-                if(delay<mindelay) delay=mindelay;
-                await Task.Delay(delay);
-                gameState.MoveBlockDown();
-                Draw(gameState);
-            }*/
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
@@ -183,9 +182,9 @@ namespace Tetris
                 case Key.Left: gameState.MoveBlockLeft(); break;
                 case Key.Right: gameState.MoveBlockRight(); break;
                 case Key.Down: gameState.MoveBlockDown(); break;
-                case Key.Up: gameState.RotateBlockCW(); break;
+                case Key.C: gameState.RotateBlockCW(); break;
                 case Key.Z: gameState.RotateBlockCCW(); break;
-                case Key.C: gameState.HoldBlock(); break;
+                case Key.X: gameState.HoldBlock(); break;
                 case Key.Space: gameState.DropBlock(); break;
                 default: return;
             }
