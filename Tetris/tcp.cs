@@ -8,7 +8,7 @@ using System.IO;
 [Serializable]
 public struct Message{
     public uint socre;
-    public uint lineEliminated;
+    public uint lineToSend;
 }
 
 public class ConnectionClosedException : Exception{
@@ -107,7 +107,7 @@ class TCPSocket{
         using(MemoryStream memstream=new MemoryStream()){
             using(BinaryWriter binwriter=new BinaryWriter(memstream)){
                 binwriter.Write(message.socre); 
-                binwriter.Write(message.lineEliminated);
+                binwriter.Write(message.lineToSend);
             }
             return memstream.ToArray();
         }
@@ -118,7 +118,7 @@ class TCPSocket{
             using(BinaryReader binreader=new BinaryReader(memstream)){
                 Message message;
                 message.socre=binreader.ReadUInt32();
-                message.lineEliminated=binreader.ReadUInt32();
+                message.lineToSend=binreader.ReadUInt32();
                 return message;
             }
         }
