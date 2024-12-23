@@ -121,10 +121,17 @@ namespace Tetris
 
         private bool IsGameOver()
         {
-            return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
+            int topRowsSum = GameGrid[0,0] + GameGrid[1,0];
+            for(int i =0;i<GameGrid.Columns;i++){
+                topRowsSum += GameGrid[0,i] + GameGrid[1,i];
+            }
+            if(topRowsSum >0)
+                return true;
+            else
+                return false;
         }
         private int CalculateScoreIncrement(int cleared){
-            int basepoint = 1;
+            int basepoint = 100;
             int multiplier = cleared *cleared * basepoint;
             return multiplier;
         }
@@ -162,11 +169,14 @@ namespace Tetris
 
         public void MoveBlockDown()
         {
-            CurrentBlock.Move(1, 0);
+            int moverow = 1;
+            int movecolumn= 0;
+            CurrentBlock.Move(moverow, movecolumn);
 
             if (!BlockFits())
             {
-                CurrentBlock.Move(-1, 0);
+                moverow = -1;
+                CurrentBlock.Move(moverow, movecolumn);
                 PlaceBlock();
             }
         }
