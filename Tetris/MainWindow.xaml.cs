@@ -132,7 +132,7 @@ namespace Tetris
         }
 
         // Draws the held block.
-        private void DrawHeldBlock(Block heldBlock, bool isPlayer2)
+        private void DrawHeldBlock(Block heldBlock, int player)
         {
             if(isPlayer2){
                 HoldImage2.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
@@ -141,7 +141,15 @@ namespace Tetris
         // Draws the ghost block indicating where the block would land.
         private void DrawGhostBlock(Block block, int player)
         {
-            
+            if(player ==2){
+                int dropDistance2 = gameStatePlayer2.BlockDropDistance();
+
+            foreach (Position p in block.TilePositions())
+            {
+                imageControlsPlayer2[p.Row + dropDistance, p.Column].Opacity = 0.25;
+                imageControlsPlayer2[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
+            } return;
+            }
             int dropDistance = gameState.BlockDropDistance();
 
             foreach (Position p in block.TilePositions())
