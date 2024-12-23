@@ -121,7 +121,7 @@ namespace TCP
             }
             catch (ConnectionClosedException)
             {
-                return message;
+                throw;
             }
             catch{
                 //handle send/recv exception 
