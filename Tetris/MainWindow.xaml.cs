@@ -178,7 +178,7 @@ namespace Tetris
                 gameState.MoveBlockDown();
                 gameStatePlayer2.MoveBlockDown();
                 //do some multiplayer update
-                isWin=multiplayer.MultiPlayerLocalUpdate(gameState,gameStatePlayer2);
+                isWin = multiplayer.MultiPlayerLocalUpdate(gameState,gameStatePlayer2);
                 await Task.Delay(delay); //delay constant time/ do not depend on score
                 Draw(gameState);
                 Draw(gameStatePlayer2);
@@ -414,6 +414,7 @@ namespace Tetris
             GameCanvas2.Visibility = Visibility.Visible;
             HoldImage2.Visibility = Visibility.Visible;
             NextImage2.Visibility = Visibility.Visible;
+            ScoreText2.Visibility = Visibility.Visible;
             MessageBox.Show("Player 2 Join");
         }
 

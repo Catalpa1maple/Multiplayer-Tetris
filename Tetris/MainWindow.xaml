@@ -88,7 +88,7 @@
              Grid.Column="2"
              Margin="0,0,0,20">
             <Canvas x:Name="GameCanvas2"
-                Visibility="Hidden"
+                Visibility="Collapsed"
                 Background="Black"
                 Width="250"
                 Height="500"
@@ -107,7 +107,7 @@
                    TextAlignment="Center" FontFamily="BIZ UDPGothic" />
 
         <TextBlock x:Name="ScoreText2"
-                   Visibility="Hidden"
+                   Visibility="Collapsed"
            Grid.Row="0"
             Grid.Column="2"
            Text="Score: "
@@ -134,6 +134,7 @@
                    Width="125"
                    />
             <Image x:Name="HoldImage2"
+                   Visibility="Hidden"
                    Margin="20"
                    Width="125"
                      />
@@ -156,6 +157,7 @@
                    Margin="20"
                    Width="125" />
             <Image x:Name="NextImage2"
+                   Visibility="Hidden"
                    Margin="20"
                    Width="125" />   
         </StackPanel>
@@ -244,7 +246,7 @@
         <Grid x:Name="StartPage"
               Grid.RowSpan="2"
               Grid.ColumnSpan="4"
-              Visibility="Hidden">
+              Visibility="Visible">
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/Background.jpeg" />
             </Grid.Background>
