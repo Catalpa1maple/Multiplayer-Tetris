@@ -22,6 +22,8 @@ namespace Tetris
             if (player1.GameOver && player2.GameOver) return 2;
             else if (player1.GameOver) return 0;
             else if (player2.GameOver) return -1;
+            player1.LinesToSend = 0;
+            player2.LinesToSend = 0;
             if (lineToSendPlayer1 > lineToSendPlayer2)
             {
                 player1.GameGrid.BeingAttacked(0);
