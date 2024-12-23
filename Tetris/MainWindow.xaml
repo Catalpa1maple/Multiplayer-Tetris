@@ -225,6 +225,13 @@
                         Margin="0,20"
                         Padding="5"
                         Click="PlayAgain_Click" Height="66" FontFamily="BIZ UDPGothic" Opacity="0.8"/>
+                <Button Content="PLAYER 2"
+                        FontSize="40"
+                        Background="White"
+                        Foreground="Black"
+                        Margin="0,20"
+                        Padding="5"
+                        Click="JoinPlayer" Height="66" FontFamily="BIZ UDPGothic" Opacity="0.8"/>
             </StackPanel>
             <Border CornerRadius="10"
                 Padding="10"

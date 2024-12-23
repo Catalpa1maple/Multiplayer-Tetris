@@ -50,6 +50,7 @@ namespace Tetris
         private int mindelay = 100;
         private int delayDecrease = 5;
         private bool isMultiplayer = false;
+        private bool isPlayer2 = false;
         private int isWin;
         private static TCPSocket tcp = new TCPSocket();
         
@@ -167,23 +168,39 @@ namespace Tetris
 
         private async Task GameLoopLocal()
         {
-            /*draw(gameState);
-            draw(gameStatePlayer2);
+            Draw(gameState);
+            Draw(gameStatePlayer2);
             while(!gameState.GameOver)
             {
-                
+                int delay = CalculateDelay(Math.Max(gameState.Score,gameStatePlayer2.Score));
                 gameState.MoveBlockDown();
                 gameStatePlayer2.MoveBlockDown();
-                await Task.Delay(delay); delay constant time/ do not depend on score
                 //do some multiplayer update
-                isWin=multiplayer.MultiplayerLocalUpdate(gameState,gameStatePlayer2);
-                if(isWin==0) show player1 win;
-                else if(isWin==-1) show player2 win;
-                else if(isWin==2) show draw;
+                isWin=multiplayer.MultiPlayerLocalUpdate(gameState,gameStatePlayer2);
+                await Task.Delay(delay); //delay constant time/ do not depend on score
                 Draw(gameState);
                 Draw(gameStatePlayer2);
                 
-            }*/
+            }
+            GameOverMenu.Visibility = Visibility.Visible;
+            switch (isWin)
+            {
+                case 0:
+                    FinalScoreText.Text = $"You Win! You gained {gameState.Score} marks. " +
+                        $"You Will Go back to the StartPage Automatically";
+                    break;
+                case -1:
+                    FinalScoreText.Text = $"You Lose! You gained {gameState.Score} marks. " +
+                        $"You Will Go back to the StartPage Automatically";
+                    break;
+                case 2:
+                    FinalScoreText.Text = $"Draw! You gained {gameState.Score} marks. " +
+                        $"You Will Go back to the StartPage Automatically";
+                    break;
+            }
+            PlagAgain.Visibility = Visibility.Hidden;
+            await Task.Delay(5000);
+            Quit();
         }
 
         // Main game loop.
@@ -224,15 +241,15 @@ namespace Tetris
                 {
                     case 0:
                         FinalScoreText.Text = $"You Win! You gained {gameState.Score} marks. " +
-                            $"You Will Go back to the StarPage Automatically";
+                            $"You Will Go back to the StartPage Automatically";
                         break;
                     case -1:
                         FinalScoreText.Text = $"You Lose! You gained {gameState.Score} marks. " +
-                            $"You Will Go back to the StarPage Automatically";
+                            $"You Will Go back to the StartPage Automatically";
                         break;
                     case 2:
                         FinalScoreText.Text = $"Draw! You gained {gameState.Score} marks. " +
-                            $"You Will Go back to the StarPage Automatically";
+                            $"You Will Go back to the StartPage Automatically";
                         break;
                 }
                 PlagAgain.Visibility = Visibility.Hidden;
@@ -288,6 +305,14 @@ namespace Tetris
                     isMultiplayer = false;
                     tcp.TCPClose();
                 }
+            }
+            else if (isPlayer2)
+            {
+                gameState = new GameState();
+                gameStatePlayer2 = new GameState();
+                StartPage.Visibility = Visibility.Hidden;
+                GameOverMenu.Visibility = Visibility.Hidden;
+                await GameLoopLocal();
             }
             else 
             {
@@ -357,6 +382,12 @@ namespace Tetris
 
                 }
             }
+        }
+
+        private void JoinPlayer(object sender, RoutedEventArgs e) 
+        {
+            isPlayer2 = true;
+            MessageBox.Show("Player 2 Join");
         }
 
         private void DrawRivals(Multiplayer multiplayer) {
