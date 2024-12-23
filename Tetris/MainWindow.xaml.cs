@@ -212,8 +212,6 @@ namespace Tetris
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             gameState = new GameState();
-            StartPage.Visibility = Visibility.Hidden;
-            GameOverMenu.Visibility = Visibility.Hidden;
             await GameLoop();
         }
 
