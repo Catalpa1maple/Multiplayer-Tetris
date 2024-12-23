@@ -139,7 +139,7 @@ namespace Tetris
             HoldImage.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
         }
         // Draws the ghost block indicating where the block would land.
-        private void DrawGhostBlock(Block block, bool isPlayer2)
+        private void DrawGhostBlock(Block block, int player)
         {
             
             int dropDistance = gameState.BlockDropDistance();
@@ -151,13 +151,13 @@ namespace Tetris
             }
         }
         // Combines all drawing operations.
-        private void Draw(GameState gameState,bool isPlayer2)
+        private void Draw(GameState gameState,int player)
         {
-            DrawGrid(gameState.GameGrid,isPlayer2);
-            DrawGhostBlock(gameState.CurrentBlock,isPlayer2);
-            DrawBlock(gameState.CurrentBlock,isPlayer2);
-            DrawNextBlock(gameState.BlockQueue,isPlayer2);
-            DrawHeldBlock(gameState.HeldBlock,isPlayer2);
+            DrawGrid(gameState.GameGrid,player);
+            DrawGhostBlock(gameState.CurrentBlock,player);
+            DrawBlock(gameState.CurrentBlock,player);
+            DrawNextBlock(gameState.BlockQueue,player);
+            DrawHeldBlock(gameState.HeldBlock,player);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
         private int CalculateDelay(int score)
@@ -174,8 +174,8 @@ namespace Tetris
 
         private async Task GameLoopLocal()
         {
-            Draw(gameState,isPlayer2);
-            Draw(gameStatePlayer2,isPlayer2);
+            Draw(gameState,1);
+            Draw(gameStatePlayer2,2);
             while(!(gameState.GameOver||gameStatePlayer2.GameOver))
             {
                 int delay = CalculateDelay(Math.Max(gameState.Score,gameStatePlayer2.Score));
@@ -184,8 +184,8 @@ namespace Tetris
                 //do some multiplayer update
                 isWin = multiplayer.MultiPlayerLocalUpdate(gameState,gameStatePlayer2);
                 await Task.Delay(delay); //delay constant time/ do not depend on score
-                Draw(gameState,isPlayer2);
-                Draw(gameStatePlayer2,isPlayer2);
+                Draw(gameState,1);
+                Draw(gameStatePlayer2,2);
                 
             }
             GameOverMenu.Visibility = Visibility.Visible;
@@ -212,7 +212,7 @@ namespace Tetris
         // Main game loop.
         private async Task GameLoop()
         {
-            Draw(gameState,isPlayer2);
+            Draw(gameState,1);
             while (!gameState.GameOver)
             {
                 int delay = CalculateDelay(gameState.Score);
@@ -237,7 +237,7 @@ namespace Tetris
                     }
                 }
                 await Task.Delay(delay);
-                Draw(gameState,isPlayer2);
+                Draw(gameState,1);
             }
 
             if (isMultiplayer)
@@ -276,23 +276,23 @@ namespace Tetris
             if (isPlayer2){
                 if(gameState.GameOver||gameStatePlayer2.GameOver) return;
                 switch (e.Key){
-                    case Key.A: gameState.MoveBlockLeft(); break;
-                    case Key.D: gameState.MoveBlockRight(); break;
-                    case Key.S: gameState.MoveBlockDown(); break;
-                    case Key.Q: gameState.RotateBlockCW(); break;
-                    case Key.E: gameState.RotateBlockCCW(); break;
-                    case Key.W: gameState.HoldBlock(); break;
-                    case Key.Space: gameState.DropBlock(); break;
-                    case Key.Left: gameStatePlayer2.MoveBlockLeft(); break;
-                    case Key.Right: gameStatePlayer2.MoveBlockRight(); break;
-                    case Key.Down: gameStatePlayer2.MoveBlockDown(); break;
-                    case Key.P: gameStatePlayer2.RotateBlockCW(); break;
-                    case Key.I: gameStatePlayer2.RotateBlockCCW(); break;
-                    case Key.K: gameStatePlayer2.HoldBlock(); break;
-                    case Key.M: gameStatePlayer2.DropBlock(); break;
+                    case Key.A: gameState.MoveBlockLeft(); Draw(gameState,1);break;
+                    case Key.D: gameState.MoveBlockRight(); Draw(gameState,1);break;
+                    case Key.S: gameState.MoveBlockDown(); Draw(gameState,1);break;
+                    case Key.Q: gameState.RotateBlockCW(); Draw(gameState,1);break;
+                    case Key.E: gameState.RotateBlockCCW(); Draw(gameState,1);break;
+                    case Key.W: gameState.HoldBlock(); Draw(gameState,1);break;
+                    case Key.Space: gameState.DropBlock(); Draw(gameState,1);break;
+                    case Key.Left: gameStatePlayer2.MoveBlockLeft(); Draw(gameStatePlayer2,2);break;
+                    case Key.Right: gameStatePlayer2.MoveBlockRight(); Draw(gameStatePlayer2,2);break;
+                    case Key.Down: gameStatePlayer2.MoveBlockDown(); Draw(gameStatePlayer2,2);break;
+                    case Key.P: gameStatePlayer2.RotateBlockCW(); Draw(gameStatePlayer2,2);break;
+                    case Key.I: gameStatePlayer2.RotateBlockCCW(); Draw(gameStatePlayer2,2);break;
+                    case Key.K: gameStatePlayer2.HoldBlock(); Draw(gameStatePlayer2,2);break;
+                    case Key.M: gameStatePlayer2.DropBlock(); Draw(gameStatePlayer2,2);break;
                     default: return;
                 }
-                Draw(gameState,isPlayer2);
+                
                 return;
             }
             if (gameState.GameOver) return;
@@ -309,7 +309,7 @@ namespace Tetris
                 default: return;
             }
 
-            Draw(gameState,isPlayer2);
+            Draw(gameState,1);
         }
 
        
