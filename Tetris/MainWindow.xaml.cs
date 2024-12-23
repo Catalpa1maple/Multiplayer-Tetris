@@ -190,12 +190,12 @@ namespace Tetris
                     }
                     catch (ConnectionClosedException)
                     {
-                        MessageBox.Show("Connection lost");
+                        MessageBox.Show("You Win");
                         Quit();
                     }
                     catch
                     {
-                        MessageBox.Show("another exception");
+                        MessageBox.Show("Connect Error");
                         Quit();
                     }
                 }
@@ -340,6 +340,7 @@ namespace Tetris
             StartPage.Visibility = Visibility.Visible;
             gameState.GameOver = true;
             multiplayer.MultiplayerUpdate(gameState, tcp);
+            Thread.Sleep(1000);
             tcp.TCPClose();
         }
 
