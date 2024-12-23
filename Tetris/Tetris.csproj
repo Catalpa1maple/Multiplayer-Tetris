@@ -23,6 +23,7 @@
     <None Remove="assets\TileBlue.png" />
     <None Remove="assets\TileCyan.png" />
     <None Remove="assets\TileEmpty.png" />
+    <None Remove="assets\TileGray.png" />
     <None Remove="assets\TileGreen.png" />
     <None Remove="assets\TileOrange.png" />
     <None Remove="assets\TilePurple.png" />
@@ -44,6 +45,7 @@
     <Resource Include="assets\TileBlue.png" />
     <Resource Include="assets\TileCyan.png" />
     <Resource Include="assets\TileEmpty.png" />
+    <Resource Include="assets\TileGray.png" />
     <Resource Include="assets\TileGreen.png" />
     <Resource Include="assets\TileOrange.png" />
     <Resource Include="assets\TilePurple.png" />
