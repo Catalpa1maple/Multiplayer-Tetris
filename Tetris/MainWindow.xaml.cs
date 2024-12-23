@@ -361,18 +361,24 @@ namespace Tetris
             gameState.GameOver = true;
             multiplayer.MultiplayerUpdate(gameState, tcp);
             Thread.Sleep(1000);
-            tcp.TCPClose();
-            Connect.IsEnabled = true;
-            Accept.IsEnabled = true;
+            if (isMultiplayer)
+            {
+                tcp.TCPClose();
+                Connect.IsEnabled = true;
+                Accept.IsEnabled = true;
+            }
         }
 
         public void Quit() 
         {
             StartPage.Visibility = Visibility.Visible;
             Thread.Sleep(1000);
-            tcp.TCPClose();
-            Connect.IsEnabled = true;
-            Accept.IsEnabled = true;
+            if (isMultiplayer)
+            {
+                tcp.TCPClose();
+                Connect.IsEnabled = true;
+                Accept.IsEnabled = true;
+            }
         }
 
     }
