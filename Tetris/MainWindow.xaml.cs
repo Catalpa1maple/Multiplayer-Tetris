@@ -168,8 +168,9 @@ namespace Tetris
             while (!gameState.GameOver)
             {
                 int delay = CalculateDelay(gameState.Score);
-                await Task.Delay(delay);
                 gameState.MoveBlockDown();
+                await Task.Delay(delay);
+                
                 if(isMultiplayer)
                 {
                     try
