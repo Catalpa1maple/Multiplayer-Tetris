@@ -231,8 +231,8 @@ namespace Tetris
         // Starts the game loop when the canvas is loaded.
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            gameState = new GameState();
-            await GameLoop();
+            //gameState = new GameState();
+            //await GameLoop();
         }
 
         // Resets the game and starts a new session when "Play Again" is clicked.
