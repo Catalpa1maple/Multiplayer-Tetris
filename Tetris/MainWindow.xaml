@@ -10,7 +10,7 @@
         MinWidth="1200" MinHeight="1000"
         FontFamily="Inter" FontSize="28"
         KeyDown="Window_KeyDown"
-        Icon="Z:\IERG380-Tetris\Tetris\Tetris\assets\Block-J.png"
+        Icon=".\assets\Block-J.png"
         >
 
     <Window.Resources>
