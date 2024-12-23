@@ -128,16 +128,20 @@ namespace Tetris
         {
             Block next = blockQueue.NextBlock;
             NextImage.Source = blockImages[next.Id];
+            
         }
 
         // Draws the held block.
-        private void DrawHeldBlock(Block heldBlock)
+        private void DrawHeldBlock(Block heldBlock, bool isPlayer2)
         {
+            if(isPlayer2){
+                HoldImage.Source = heldBlock2 == null ? blockImages[0] : blockImages[heldBlock.Id];
             HoldImage.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
         }
         // Draws the ghost block indicating where the block would land.
-        private void DrawGhostBlock(Block block)
+        private void DrawGhostBlock(Block block, bool isPlayer2)
         {
+            
             int dropDistance = gameState.BlockDropDistance();
 
             foreach (Position p in block.TilePositions())
@@ -147,13 +151,13 @@ namespace Tetris
             }
         }
         // Combines all drawing operations.
-        private void Draw(GameState gameState)
+        private void Draw(GameState gameState,bool isPlayer2)
         {
-            DrawGrid(gameState.GameGrid);
-            DrawGhostBlock(gameState.CurrentBlock);
-            DrawBlock(gameState.CurrentBlock);
-            DrawNextBlock(gameState.BlockQueue);
-            DrawHeldBlock(gameState.HeldBlock);
+            DrawGrid(gameState.GameGrid,isPlayer2);
+            DrawGhostBlock(gameState.CurrentBlock,isPlayer2);
+            DrawBlock(gameState.CurrentBlock,isPlayer2);
+            DrawNextBlock(gameState.BlockQueue,isPlayer2);
+            DrawHeldBlock(gameState.HeldBlock,isPlayer2);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
         private int CalculateDelay(int score)
@@ -170,8 +174,8 @@ namespace Tetris
 
         private async Task GameLoopLocal()
         {
-            Draw(gameState);
-            Draw(gameStatePlayer2);
+            Draw(gameState,isPlayer2);
+            Draw(gameStatePlayer2,isPlayer2);
             while(!(gameState.GameOver||gameStatePlayer2.GameOver))
             {
                 int delay = CalculateDelay(Math.Max(gameState.Score,gameStatePlayer2.Score));
@@ -180,8 +184,8 @@ namespace Tetris
                 //do some multiplayer update
                 isWin = multiplayer.MultiPlayerLocalUpdate(gameState,gameStatePlayer2);
                 await Task.Delay(delay); //delay constant time/ do not depend on score
-                Draw(gameState);
-                Draw(gameStatePlayer2);
+                Draw(gameState,isPlayer2);
+                Draw(gameStatePlayer2,isPlayer2);
                 
             }
             GameOverMenu.Visibility = Visibility.Visible;
@@ -208,7 +212,7 @@ namespace Tetris
         // Main game loop.
         private async Task GameLoop()
         {
-            Draw(gameState);
+            Draw(gameState,isPlayer2);
             while (!gameState.GameOver)
             {
                 int delay = CalculateDelay(gameState.Score);
@@ -219,7 +223,7 @@ namespace Tetris
                     {
                         isWin = multiplayer.MultiplayerUpdate(gameState, tcp);
                         if (isWin != 1) continue;
-                        DrawRivals(multiplayer);
+                        DrawRivals(multiplayer,isPlayer2);
                     }
                     catch (ConnectionClosedException)
                     {
@@ -233,7 +237,7 @@ namespace Tetris
                     }
                 }
                 await Task.Delay(delay);
-                Draw(gameState);
+                Draw(gameState,isPlayer2);
             }
 
             if (isMultiplayer)
@@ -288,7 +292,7 @@ namespace Tetris
                     case Key.M: gameStatePlayer2.DropBlock(); break;
                     default: return;
                 }
-                Draw(gameState);
+                Draw(gameState,isPlayer2);
                 return;
             }
             if (gameState.GameOver) return;
@@ -305,7 +309,7 @@ namespace Tetris
                 default: return;
             }
 
-            Draw(gameState);
+            Draw(gameState,isPlayer2);
         }
 
        
