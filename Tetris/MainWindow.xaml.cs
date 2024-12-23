@@ -238,7 +238,7 @@ namespace Tetris
                         break;
                 }
                 //PlagAgain.Visibility = Visibility.Hidden;
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
                 Quit();
             }
             else
