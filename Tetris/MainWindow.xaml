@@ -312,7 +312,7 @@
                 <StackPanel>
                     <TextBlock 
                         Text="IP Address of Your Rival(Remote)"
-                        FontSize="30"
+                        FontSize="20"
                         FontWeight="DemiBold"
                         Foreground="Black"
                         TextAlignment="Center" FontFamily="BIZ UDPGothic" Height="38"/>
