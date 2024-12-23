@@ -135,7 +135,7 @@ namespace Tetris
         private void DrawHeldBlock(Block heldBlock, bool isPlayer2)
         {
             if(isPlayer2){
-                HoldImage.Source = heldBlock2 == null ? blockImages[0] : blockImages[heldBlock.Id];
+                HoldImage2.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
             HoldImage.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
         }
         // Draws the ghost block indicating where the block would land.
