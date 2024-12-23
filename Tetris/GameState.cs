@@ -119,7 +119,11 @@ namespace Tetris
         {
             return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
-
+        private int CalculateScoreIncrement(int cleared){
+            int basepoint = 1;
+            int multiplier = cleared *cleared * basepoint;
+            return multiplier;
+        }
         private void PlaceBlock()
         {
             foreach (Position p in CurrentBlock.TilePositions())
@@ -127,7 +131,7 @@ namespace Tetris
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
 
-            LinesToSend = GameGrid.ClearFullRows();
+            LinesToSend = CalculateScoreIncrement(GameGrid.ClearFullRows());
             Score += LinesToSend;
 
             if (IsGameOver())
