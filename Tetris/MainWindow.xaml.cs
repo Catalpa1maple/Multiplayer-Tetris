@@ -56,11 +56,12 @@ namespace Tetris
         private Multiplayer multiplayer = new Multiplayer();
 
         // The game's state.
-        private GameState gameState = new GameState();
+        private GameState gameState;
 
         public MainWindow()
         {
             InitializeComponent();
+            gameState = new GameState();
             imageControls = SetupGameCanvas(gameState.GameGrid);
         }
         
@@ -68,9 +69,9 @@ namespace Tetris
         // Sets up the game canvas with a grid of Image controls.
         private Image[,] SetupGameCanvas(GameGrid grid)
         {
-            Image[,] imageControls = new Image[grid.Rows, grid.Columns];
             int cellSize = 25;
-
+            Image[,] imageControls = new Image[grid.Rows, grid.Columns];
+            
             for (int r = 0; r < grid.Rows; r++)
             {
                 for (int c = 0; c < grid.Columns; c++)
@@ -97,9 +98,8 @@ namespace Tetris
             {
                 for (int c = 0; c < grid.Columns; c++)
                 {
-                    int id = grid[r, c];
                     imageControls[r,c].Opacity =1;
-                    imageControls[r, c].Source = tileImages[id];
+                    imageControls[r, c].Source = tileImages[grid[r,c]];
                 }
             }
         }
@@ -109,11 +109,11 @@ namespace Tetris
         {
             foreach (Position p in block.TilePositions())
             {
-                //if (p.Row >= 0) // Only draw tiles within the visible grid.
-                //{
+                if (p.Row >= 0) // Only draw tiles within the visible grid.
+                {
                     imageControls[p.Row,p.Column].Opacity =1;
                     imageControls[p.Row, p.Column].Source = tileImages[block.Id];
-                //}
+                }
             }
         }
 
