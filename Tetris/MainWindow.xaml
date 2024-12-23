@@ -264,13 +264,41 @@
                         Margin="0,20"
                         Padding="5"
                         Click="PlayAgain_Click" Height="66" FontFamily="BIZ UDPGothic" Opacity="0.8"/>
-                <Button Content="PLAYER 2"
+                <Button Content="PLAYER 2(Local)"
                         FontSize="40"
                         Background="White"
                         Foreground="Black"
                         Margin="0,20"
                         Padding="5"
                         Click="JoinPlayer" Height="66" FontFamily="BIZ UDPGothic" Opacity="0.8"/>
+                <TextBlock Text="When single and remote mode: "
+                    FontSize="14"
+                    TextAlignment="Center"
+                    Foreground="WhiteSmoke"/>
+                <TextBlock Text="left=left, right=right, down=down, C=Clockwise, Z=CounterClockwise,X=Hold,Space=Drop"
+                    FontSize="14"
+                    TextAlignment="Center"
+                    Foreground="WhiteSmoke"/>
+                <TextBlock Text="when 2  players mode: 
+    P1:
+    A:Left
+    D:Right
+    S:Down
+    Q:Clockwise
+    E:CounterClocker
+    W:Hold
+    Space:Drop
+    P2:
+    Left:Left
+    Right:Right
+    Down:Down
+    P:Clockwise
+    I:CounterClocker
+    K:Hold
+    M:Drop"
+                    FontSize="14"
+                    TextAlignment="Center"
+                    Foreground="WhiteSmoke"/>
             </StackPanel>
             <Border CornerRadius="10"
                 Padding="10"
@@ -283,7 +311,7 @@
 
                 <StackPanel>
                     <TextBlock 
-                        Text="IP Address of Your Rival"
+                        Text="IP Address of Your Rival(Remote)"
                         FontSize="30"
                         FontWeight="DemiBold"
                         Foreground="Black"
