@@ -201,6 +201,7 @@ namespace Tetris
                     try
                     {
                         isWin = multiplayer.MultiplayerUpdate(gameState, tcp);
+                        if(isWin != 1) continue;
                         DrawRivals(multiplayer);
                     }
                     catch (ConnectionClosedException)
