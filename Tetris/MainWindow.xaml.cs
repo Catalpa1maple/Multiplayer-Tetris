@@ -176,6 +176,10 @@ namespace Tetris
                 gameStatePlayer2.MoveBlockDown();
                 await Task.Delay(delay); delay constant time/ do not depend on score
                 //do some multiplayer update
+                isWin=multiplayer.MultiplayerLocalUpdate(gameState,gameStatePlayer2);
+                if(isWin==0) show player1 win;
+                else if(isWin==-1) show player2 win;
+                else if(isWin==2) show draw;
                 Draw(gameState);
                 Draw(gameStatePlayer2);
                 

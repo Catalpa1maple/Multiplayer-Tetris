@@ -15,6 +15,28 @@ namespace Tetris
             message.lineToSend = 0;
         }
 
+        public int MultiPlayerLocalUpdate(GameState player1, GameState player2)
+        {
+            int lineToSendPlayer1 = player1.LinesToSend;
+            int lineToSendPlayer2 = player2.LinesToSend;
+            if (player1.GameOver && player2.GameOver) return 2;
+            else if (player1.GameOver) return 0;
+            else if (player2.GameOver) return -1;
+            if (lineToSendPlayer1 > lineToSendPlayer2)
+            {
+                player1.GameGrid.BeingAttacked(0);
+                player2.GameGrid.BeingAttacked(lineToSendPlayer1 - lineToSendPlayer2);
+                return 1;
+            }
+            else
+            {
+                player2.GameGrid.BeingAttacked(0);
+                player1.GameGrid.BeingAttacked(lineToSendPlayer2 - lineToSendPlayer1);
+                return 1;
+            }
+        }
+
+
         public int MultiplayerUpdate(GameState gameSate, TCPSocket tcp)
         {
 
