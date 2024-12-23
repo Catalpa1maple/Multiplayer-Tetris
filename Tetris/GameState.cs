@@ -10,17 +10,17 @@ namespace Tetris
             private set
             {
                 currentBlock = value;
-                currentBlock.Reset();
-
-                    currentBlock.Move(1, 0);
-
-                    if (!BlockFits())
-                    {
-                        currentBlock.Move(-1, 0);
-                    }
+                InitializeBlockPostion();}
+        }
+        private void InitializeBlockPostion(){
+            currentBlock.Reset();
+            for(int i =0;i<2;i++){
+                currentBlock.Move(1,0);
+                if(!BlockFits()){
+                    currentBlock.Move(-1,0);
+                }
             }
         }
-
         public Tetris.GameGrid GameGrid { get; }
         public BlockQueue BlockQueue { get; }
         public bool GameOver { get; set; }
@@ -66,53 +66,52 @@ namespace Tetris
                 CurrentBlock = BlockQueue.GetAndUpdate();
             }
             else
-            {
-                Block tmp = CurrentBlock;
-                CurrentBlock = HeldBlock;
-                HeldBlock = tmp;
-            }
-
+            
+                (HeldBlock,CurrentBlock) = (CurrentBlock, HeldBlock);
             CanHold = false;
         }
 
         public void RotateBlockCW()
         {
             CurrentBlock.RotateCW();
-
-            if (!BlockFits())
-            {
+            if (BlockFits())
+                return;
+            else
                 CurrentBlock.RotateCCW();
-            }
+            
         }
 
         public void RotateBlockCCW()
         {
             CurrentBlock.RotateCCW();
 
-            if (!BlockFits())
-            {
+            if (BlockFits())
+                return;
+            else
                 CurrentBlock.RotateCW();
-            }
+            
         }
-
+        
         public void MoveBlockLeft()
         {
+            int moverow = 
             CurrentBlock.Move(0, -1);
-
-            if (!BlockFits())
-            {
+            if (BlockFits())
+                return;
+            else
                 CurrentBlock.Move(0, 1);
-            }
+            
         }
 
         public void MoveBlockRight()
         {
             CurrentBlock.Move(0, 1);
 
-            if (!BlockFits())
-            {
+            if (BlockFits())
+                return;
+            else
                 CurrentBlock.Move(0, -1);
-            }
+            
         }
 
         private bool IsGameOver()
@@ -131,8 +130,9 @@ namespace Tetris
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
 
-            LinesToSend = CalculateScoreIncrement(GameGrid.ClearFullRows());
-            Score += LinesToSend;
+            LinesToSend = GameGrid.ClearFullRows();
+            addition = CalculateScoreIncrement(GameGrid.ClearFullRows());
+            Score += addition;
 
             if (IsGameOver())
             {
