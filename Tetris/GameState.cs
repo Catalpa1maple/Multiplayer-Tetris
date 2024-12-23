@@ -140,6 +140,7 @@ namespace Tetris
                 tmp = tmp * 2;
             }
             multiplier = basepoint * tmp;
+            if(cleared == 0) return 0;
             return multiplier;
         }
         private void PlaceBlock()
