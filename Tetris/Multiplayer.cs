@@ -23,7 +23,7 @@ namespace Tetris
             if (gameSate.GameOver) message.lineToSend = -1;
             gameSate.LinesToSend = 0;
             
-
+            
             try
             {
                 rivalMessage = tcp.TCPupdate(message);

@@ -191,8 +191,8 @@ namespace Tetris
                 int delay = CalculateDelay(gameState.Score);
                 gameState.MoveBlockDown();
                 await Task.Delay(delay);
-                
-                if(isMultiplayer)
+
+                if (isMultiplayer)
                 {
                     try
                     {
@@ -202,7 +202,7 @@ namespace Tetris
                             MessageBox.Show("You loss !!!");
                             Quit();
                         } // game over and rival 
-                        else if (isWin == 0) 
+                        else if (isWin == 0)
                         {
                             MessageBox.Show("You win !!!");
                             Quit();
@@ -225,20 +225,24 @@ namespace Tetris
                         Quit();
                     }
                 }
-                
+
                 Draw(gameState);
             }
 
-            if (isMultiplayer) {
-                GameCanvas.Visibility = Visibility.Visible;
+            if (isMultiplayer)
+            {
+                GameOverMenu.Visibility = Visibility.Visible;
                 FinalScoreText.Text = $"You gained {gameState.Score} marks. " +
                     $"You Will Go back to the StarPage Automatically";
                 PlagAgain.Visibility = Visibility.Hidden;
                 Thread.Sleep(5000);
                 Quit();
-            } 
-            GameOverMenu.Visibility = Visibility.Visible;
-            FinalScoreText.Text = $"You gained {gameState.Score} marks.";
+            }
+            else
+            {
+                GameOverMenu.Visibility = Visibility.Visible;
+                FinalScoreText.Text = $"You gained {gameState.Score} marks.";
+            }
         }
         
 
