@@ -183,6 +183,7 @@ namespace Tetris
                         else if (isWin == 0) 
                         {
                             MessageBox.Show("You win !!!");
+                            Quit();
                         }
                         DrawRivals(multiplayer);
                     }
@@ -331,6 +332,8 @@ namespace Tetris
         private void QuitForBtn(object sender, RoutedEventArgs e)
         {
             StartPage.Visibility = Visibility.Visible;
+            gameState.GameOver = true;
+            multiplayer.MultiplayerUpdate(gameState, tcp);
             tcp.TCPClose();
         }
 
