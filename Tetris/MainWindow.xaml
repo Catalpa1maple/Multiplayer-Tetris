@@ -256,7 +256,7 @@
                            FontSize="172"
                            FontWeight="Heavy"
                            Foreground="WhiteSmoke"
-                           TextAlignment="Center" Height="228" Width="1023" RenderTransformOrigin="0.499,0.321" IsEnabled="False" FontFamily="Castellar"/>
+                           TextAlignment="Center" Height="234" Width="1023" RenderTransformOrigin="0.499,0.321" IsEnabled="False" FontFamily="Castellar"/>
                 <Button Content="START"
                         FontSize="40"
                         Background="White"
@@ -297,6 +297,11 @@
     K:Hold
     M:Drop"
                     FontSize="14"
+                    TextAlignment="Center"
+                    Foreground="WhiteSmoke"/>
+                <TextBlock Text="If want to Connect to Remote, don't Click PLAYER 2 Button !!!"
+                    FontSize="20"
+                           FontWeight="Black"
                     TextAlignment="Center"
                     Foreground="WhiteSmoke"/>
             </StackPanel>
