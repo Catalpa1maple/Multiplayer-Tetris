@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
         Title="Tetris" 
-        Height="1000" Width="1200"
+        Height="1000" Width="1500"
         MinWidth="1200" MinHeight="1000"
         FontFamily="Inter" FontSize="28"
         KeyDown="Window_KeyDown"
@@ -65,6 +65,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -83,14 +84,38 @@
                     Loaded="GameCanvas_Loaded" />
         </Viewbox>
 
+        <Viewbox Grid.Row="1"
+             Grid.Column="2"
+             Margin="0,0,0,20">
+            <Canvas x:Name="GameCanvas2"
+                Background="Black"
+                Width="250"
+                Height="500"
+                ClipToBounds="True"
+                Loaded="GameCanvas_Loaded" />
+        </Viewbox>
+
         <TextBlock x:Name="ScoreText"
                    Grid.Row="0"
+                   Grid.Column="1"
                    Text="Score: "
-                   Margin="123,10,123,10"
+                   Margin="51,14,52,6"
                    FontStyle="Italic"
                    FontSize="30"
                    Foreground="White"
-                   TextAlignment="Center" Grid.ColumnSpan="3" FontFamily="BIZ UDPGothic" />
+                   TextAlignment="Center" FontFamily="BIZ UDPGothic" />
+
+        <TextBlock x:Name="ScoreText2"
+           Grid.Row="0"
+            Grid.Column="2"
+           Text="Score: "
+           Margin="52,10,51,10"
+           FontStyle="Italic"
+           FontSize="30"
+           Foreground="White"
+           TextAlignment="Center" FontFamily="BIZ UDPGothic" />
+
+
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
@@ -106,12 +131,19 @@
                    Margin="20"
                    Width="125"
                    />
+            <Image x:Name="HoldImage2"
+                   Margin="20"
+                   Width="125"
+                     />
+            
         </StackPanel>
+        
+
 
         <StackPanel Grid.Row="1"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left" Margin="31,10,0,0"
                     >
             <TextBlock Text="NEXT"
                        FontWeight="Bold"
@@ -121,6 +153,9 @@
             <Image x:Name="NextImage"
                    Margin="20"
                    Width="125" />
+            <Image x:Name="NextImage2"
+                   Margin="20"
+                   Width="125" />   
         </StackPanel>
 
         <StackPanel x:Name="Rival"
@@ -160,11 +195,11 @@
                 Foreground="Black"
                 FontWeight="DemiBold"
                 Grid.Row="1"
-                Grid.Column="2"
+                Grid.Column="3"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Center"
                 Padding="20"
-                Margin="0,0,20,20"
+                Margin="0,0,0,20"
                 Width="150"
                 Height="40"
                 Click="QuitForBtn"
@@ -207,7 +242,7 @@
         <Grid x:Name="StartPage"
               Grid.RowSpan="2"
               Grid.ColumnSpan="3"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/Background.jpeg" />
             </Grid.Background>
@@ -296,4 +331,6 @@
 
 
     </Grid>
+
+
 </Window>
