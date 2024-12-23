@@ -17,28 +17,27 @@ namespace Tetris
 
         public int MultiplayerUpdate(GameState gameSate, TCPSocket tcp)
         {
-            if (gameSate.LinesToSend != 0)
+            
+            message.score = gameSate.Score;
+            message.lineToSend = gameSate.LinesToSend;
+            gameSate.LinesToSend = 0;
+
+            try
             {
-                message.score = gameSate.Score;
-                message.lineToSend = gameSate.LinesToSend;
-                try
-                {
-                    rivalMessage = tcp.TCPupdate(message);
-                    Console.WriteLine("Rival Score: " + rivalMessage.score);
-                    Console.WriteLine("Rival Lines: " + rivalMessage.lineToSend);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Cannot Send to rival");
-                    tcp.TCPClose();
-                }
-
-                if (message.lineToSend > rivalMessage.lineToSend)return 0;
-                else return LinesToAdd = rivalMessage.lineToSend - message.lineToSend;
-
-
+                rivalMessage = tcp.TCPupdate(message);
+                Console.WriteLine("Rival Score: " + rivalMessage.score);
+                Console.WriteLine("Rival Lines: " + rivalMessage.lineToSend);
             }
-            else return 0;
+            catch (Exception)
+            {
+                Console.WriteLine("Cannot Send to rival");
+                tcp.TCPClose();
+            }
+
+            if (message.lineToSend > rivalMessage.lineToSend)return 0;
+            else return LinesToAdd = rivalMessage.lineToSend - message.lineToSend;
+
+
         }
 
     }

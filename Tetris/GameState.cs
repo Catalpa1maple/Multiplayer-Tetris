@@ -31,11 +31,12 @@ namespace Tetris
         public Block HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
 
-        public int LinesToSend { get; private set; }
+        public int LinesToSend;
 
 
         public GameState()
         {
+            LinesToSend = 0;
             GameGrid = new Tetris.GameGrid(22, 10);
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
