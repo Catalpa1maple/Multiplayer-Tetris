@@ -131,7 +131,7 @@ namespace Tetris
             }
 
             LinesToSend = GameGrid.ClearFullRows();
-            addition = CalculateScoreIncrement(GameGrid.ClearFullRows());
+            int addition = CalculateScoreIncrement(GameGrid.ClearFullRows());
             Score += addition;
 
             if (IsGameOver())
