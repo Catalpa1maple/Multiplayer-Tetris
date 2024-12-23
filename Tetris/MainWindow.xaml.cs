@@ -44,7 +44,7 @@ namespace Tetris
 
         // 2D array to hold the Image controls for the game grid.
         private Image[,] imageControls;
-
+        private Image[,] imageControlsPlayer2;
         // Timing and game delay settings.
         private int maxDelay = 1000;
         private int mindelay = 100;
@@ -65,7 +65,9 @@ namespace Tetris
         {
             InitializeComponent();
             gameState = new GameState();
+            gameStatePlayer2 = new GameState();
             imageControls = SetupGameCanvas(gameState.GameGrid);
+            imageControlsPlayer2 = SetupGameCanvas(gameStatePlayer2.GameGrid);
         }
         
 
@@ -170,7 +172,7 @@ namespace Tetris
         {
             Draw(gameState);
             Draw(gameStatePlayer2);
-            while(!gameState.GameOver)
+            while(!(gameState.GameOver||gameStatePlayer2.GameOver))
             {
                 int delay = CalculateDelay(Math.Max(gameState.Score,gameStatePlayer2.Score));
                 gameState.MoveBlockDown();
@@ -267,6 +269,28 @@ namespace Tetris
         // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (isPlayer2){
+                if(gameState.GameOver||gameStatePlayer2.GameOver) return;
+                switch (e.Key){
+                    case Key.A: gameState.MoveBlockLeft(); break;
+                    case Key.D: gameState.MoveBlockRight(); break;
+                    case Key.S: gameState.MoveBlockDown(); break;
+                    case Key.Q: gameState.RotateBlockCW(); break;
+                    case Key.E: gameState.RotateBlockCCW(); break;
+                    case Key.W: gameState.HoldBlock(); break;
+                    case Key.Space: gameState.DropBlock(); break;
+                    case Key.Left: gameStatePlayer2.MoveBlockLeft(); break;
+                    case Key.Right: gameStatePlayer2.MoveBlockRight(); break;
+                    case Key.Down: gameStatePlayer2.MoveBlockDown(); break;
+                    case Key.P: gameStatePlayer2.RotateBlockCW(); break;
+                    case Key.I: gameStatePlayer2.RotateBlockCCW(); break;
+                    case Key.K: gameStatePlayer2.HoldBlock(); break;
+                    case Key.M: gameStatePlayer2.DropBlock(); break;
+                    default: return;
+                }
+                Draw(gameState);
+                return;
+            }
             if (gameState.GameOver) return;
 
             switch (e.Key)
