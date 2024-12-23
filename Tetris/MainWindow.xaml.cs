@@ -297,10 +297,11 @@ namespace Tetris
         }
 
         private void DrawRivals(Multiplayer multiplayer) {
-            if (!isMultiplayer) {
-                Rival.Visibility = Visibility.Hidden;
-                return;
-            }
+            //if (!isMultiplayer) {
+            //    Rival.Visibility = Visibility.Hidden;
+            //    return;
+            //}
+
             RivalScore.Text = $"Rival's score: {multiplayer.rivalMessage.score}";
             RivalLines.Text = $"Lines For You: {multiplayer.rivalMessage.lineToSend}";
         }
