@@ -97,8 +97,19 @@ namespace Tetris
             return imageControls;
         }
 
-        private void DrawGrid(GameGrid grid)
+        private void DrawGrid(GameGrid grid,int player)
         {
+            if(player ==2){
+                for (int r = 0; r < grid.Rows; r++)
+            {
+                for (int c = 0; c < grid.Columns; c++)
+                {
+                    imageControlsPlayer2[r,c].Opacity =1;
+                    imageControlsPlayer2[r, c].Source = tileImages[grid[r,c]];
+                }
+            }
+            }
+
             for (int r = 0; r < grid.Rows; r++)
             {
                 for (int c = 0; c < grid.Columns; c++)
@@ -117,9 +128,9 @@ namespace Tetris
             {
                 if (p.Row >= 0) // Only draw tiles within the visible grid.
                 {
-                    imageControls[p.Row,p.Column].Opacity =1;
-                    imageControls[p.Row, p.Column].Source = tileImages[block.Id];
-                }
+                    imageControlsPlayer2[p.Row,p.Column].Opacity =1;
+                    imageControlsPlayer2[p.Row, p.Column].Source = tileImages[block.Id];
+                } return;
             }
 
             }
@@ -162,8 +173,8 @@ namespace Tetris
 
             foreach (Position p in block.TilePositions())
             {
-                imageControlsPlayer2[p.Row + dropDistance, p.Column].Opacity = 0.25;
-                imageControlsPlayer2[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
+                imageControlsPlayer2[p.Row + dropDistance2, p.Column].Opacity = 0.25;
+                imageControlsPlayer2[p.Row + dropDistance2, p.Column].Source = tileImages[block.Id];
             } return;
             }
             int dropDistance = gameState.BlockDropDistance();
