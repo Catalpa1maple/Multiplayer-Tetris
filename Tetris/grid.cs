@@ -116,7 +116,7 @@ namespace Tetris
                 }
                 for (int c = 0; c < Columns; c++ ){
                     if (c != hole)
-                        grid[Rows - 1,c] = 4;
+                        grid[Rows - 1,c] = 8;
                     else
                         grid[Rows-1,c] = 0;
                 }
@@ -126,22 +126,26 @@ namespace Tetris
         public int ClearFullRows()
         {
             int cleared = 0;
-
+            int[] rowsToClear = new int[Rows];
             for (int r = Rows - 1; r >= 0; r--)
             {
                 bool rowFull = IsRowFull(r);
                 if (rowFull)
                 {
-                    ClearRow(r);
-                    cleared++;
-                }
-                else if (cleared > 0)
-                {
-                    int tempCleared = cleared;
-                    MoveRowDown(r, tempCleared);
+                    rowsToClear[cleared++] = r;
                 }
             }
-
+            for (int i = 0; i < cleared; i++)
+            {
+                ClearRow(rowsToClear[i]); // Clear each row
+            }
+            for (int i = cleared - 1; i >= 0; i--)
+            {
+                for (int r = rowsToClear[i] - 1; r >= 0; r--)
+                {
+                    MoveRowDown(r, 1); // Move rows above down one by one
+                }
+            }
             return cleared;
         }
     }

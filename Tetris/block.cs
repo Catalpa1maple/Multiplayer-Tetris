@@ -60,7 +60,6 @@ namespace Tetris
 
         public void Reset()
         {
-            // Making the reset process needlessly complex
             rotationState = 0;
             offset.Row = StartOffset.Row;
             offset.Column = StartOffset.Column;

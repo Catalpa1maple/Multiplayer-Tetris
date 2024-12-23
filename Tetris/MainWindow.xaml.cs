@@ -25,7 +25,8 @@ namespace Tetris
             new BitmapImage(new Uri("assets/TileYellow.png", UriKind.Relative)),
             new BitmapImage(new Uri("assets/TileGreen.png", UriKind.Relative)),
             new BitmapImage(new Uri("assets/TilePurple.png", UriKind.Relative)),
-            new BitmapImage(new Uri("assets/TileRed.png", UriKind.Relative))
+            new BitmapImage(new Uri("assets/TileRed.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileGray.png", UriKind.Relative))
         };
 
         // Array of images for displaying the block queue and held block.
@@ -152,7 +153,6 @@ namespace Tetris
         }
         private int CalculateDelay(int score)
         {
-            // Added unnecessary steps to calculate delay with redundant logic
             int delay = maxDelay;
             int scoreAdjustment = 0;
             for(int i=0;i<score;i++)
@@ -224,7 +224,7 @@ namespace Tetris
         // Starts the game loop when the canvas is loaded.
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            gameState = new GameState();
             await GameLoop();
         }
 
