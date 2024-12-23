@@ -25,7 +25,8 @@ namespace Tetris
             new BitmapImage(new Uri("assets/TileYellow.png", UriKind.Relative)),
             new BitmapImage(new Uri("assets/TileGreen.png", UriKind.Relative)),
             new BitmapImage(new Uri("assets/TilePurple.png", UriKind.Relative)),
-            new BitmapImage(new Uri("assets/TileRed.png", UriKind.Relative))
+            new BitmapImage(new Uri("assets/TileRed.png", UriKind.Relative)),
+            new BitmapImage(new Uri("assets/TileGray.png", UriKind.Relative))
         };
 
         // Array of images for displaying the block queue and held block.
