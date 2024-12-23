@@ -123,6 +123,7 @@
         </StackPanel>
 
         <StackPanel x:Name="Rival"
+                    Visibility="Hidden"
                     Grid.Row="1"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Documents;
 using TCP;
 
@@ -49,6 +49,7 @@ namespace Tetris
         private int mindelay = 100;
         private int delayDecrease = 5;
         private bool isMultiplayer = false;
+        private int isWin;
         private static TCPSocket tcp = new TCPSocket();
         
         private Multiplayer multiplayer = new Multiplayer();
@@ -169,19 +170,31 @@ namespace Tetris
                 int delay = CalculateDelay(gameState.Score);
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
-                try
+                if(isMultiplayer)
                 {
-                    multiplayer.MultiplayerUpdate(gameState, tcp);
-                    DrawRivals(multiplayer);
+                    try
+                    {
+                        isWin = multiplayer.MultiplayerUpdate(gameState, tcp);
+                        if (isWin == -1)
+                        {
+                            MessageBox.Show("You loss !!!");
+                            Quit();
+                        } // game over and rival 
+                        else if (isWin == 0) 
+                        {
+                            MessageBox.Show("You win !!!");
+                        }
+                        DrawRivals(multiplayer);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Connection lost");
+                        Quit();
+                    }
                 }
-                catch (Exception)
-                {
-                    MessageBox.Show("Connection lost");
-                    Quit();
-                }
+                
                 Draw(gameState);
             }
-            multiplayer.MultiplayerUpdate(gameState, tcp);
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
@@ -310,7 +323,7 @@ namespace Tetris
             //    Rival.Visibility = Visibility.Hidden;
             //    return;
             //}
-
+            Rival.Visibility = Visibility.Visible;
             RivalScore.Text = $"Rival's score: {multiplayer.rivalMessage.score}";
             RivalLines.Text = $"Lines For You: {multiplayer.rivalMessage.lineToSend}";
         }
@@ -324,6 +337,7 @@ namespace Tetris
         public void Quit() 
         {
             StartPage.Visibility = Visibility.Visible;
+            Thread.Sleep(1000);
             tcp.TCPClose();
         }
 
