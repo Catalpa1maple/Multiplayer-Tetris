@@ -169,10 +169,19 @@ namespace Tetris
                 int delay = CalculateDelay(gameState.Score);
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
-                multiplayer.MultiplayerUpdate(gameState, tcp);
-                DrawRivals(multiplayer);
+                try
+                {
+                    multiplayer.MultiplayerUpdate(gameState, tcp);
+                    DrawRivals(multiplayer);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Connection lost");
+                    Quit();
+                }
                 Draw(gameState);
             }
+            multiplayer.MultiplayerUpdate(gameState, tcp);
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
@@ -306,9 +315,16 @@ namespace Tetris
             RivalLines.Text = $"Lines For You: {multiplayer.rivalMessage.lineToSend}";
         }
 
-        private void Quit(object sender, RoutedEventArgs e)
+        private void QuitForBtn(object sender, RoutedEventArgs e)
         {
             StartPage.Visibility = Visibility.Visible;
+            tcp.TCPClose();
+        }
+
+        public void Quit() 
+        {
+            StartPage.Visibility = Visibility.Visible;
+            tcp.TCPClose();
         }
 
     }
