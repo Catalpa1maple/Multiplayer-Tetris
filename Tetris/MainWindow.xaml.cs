@@ -175,7 +175,7 @@ namespace Tetris
                 gameState.MoveBlockDown();
                 gameStatePlayer2.MoveBlockDown();
                 await Task.Delay(delay); delay constant time/ do not depend on score
-                
+                //do some multiplayer update
                 Draw(gameState);
                 Draw(gameStatePlayer2);
                 
