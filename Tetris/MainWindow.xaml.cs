@@ -45,9 +45,9 @@ namespace Tetris
         private Image[,] imageControls;
 
         // Timing and game delay settings.
-        private int maxDelay = 1500;
+        private int maxDelay = 1000;
         private int mindelay = 100;
-        private int delayDecrease = 70;
+        private int delayDecrease = 5;
         private bool isMultiplayer = false;
         private static TCPSocket tcp = new TCPSocket();
         
