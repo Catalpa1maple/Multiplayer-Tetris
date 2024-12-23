@@ -57,6 +57,8 @@ namespace Tetris
 
         // The game's state.
         private GameState gameState;
+        //gameStateplayer2
+        private GameState gameStatePlayer2;
 
         public MainWindow()
         {
@@ -162,7 +164,25 @@ namespace Tetris
 
             return Math.Max(mindelay, delay);
         }
-         // Main game loop.
+
+        private async Task GameLoopLocal()
+        {
+            /*draw(gameState);
+            draw(gameStatePlayer2);
+            while(!gameState.GameOver)
+            {
+                
+                gameState.MoveBlockDown();
+                gameStatePlayer2.MoveBlockDown();
+                await Task.Delay(delay); delay constant time/ do not depend on score
+                //do some multiplayer update
+                Draw(gameState);
+                Draw(gameStatePlayer2);
+                
+            }*/
+        }
+
+        // Main game loop.
         private async Task GameLoop()
         {
             Draw(gameState);
