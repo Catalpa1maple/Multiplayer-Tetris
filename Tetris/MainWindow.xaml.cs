@@ -219,7 +219,6 @@ namespace Tetris
 
             if (isMultiplayer)
             {
-                MessageBox.Show("HIHIHIHIH");
                 GameOverMenu.Visibility = Visibility.Visible;
                 switch (isWin)
                 {
@@ -236,9 +235,9 @@ namespace Tetris
                             $"You Will Go back to the StarPage Automatically";
                         break;
                 }
-                //PlagAgain.Visibility = Visibility.Hidden;
-                //Thread.Sleep(5000);
-                //Quit();
+                PlagAgain.Visibility = Visibility.Hidden;
+                await Task.Delay(5000);
+                Quit();
             }
             else
             {
