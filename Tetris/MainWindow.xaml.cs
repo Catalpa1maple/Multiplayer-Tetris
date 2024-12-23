@@ -61,14 +61,14 @@ namespace Tetris
         
 
         // Sets up the game canvas with a grid of Image controls.
-        private Image[,] SetupGameCanvas(Grid grid)
+        private Image[,] SetupGameCanvas(GameGrid grid)
         {
-            Image[,] imageControls = new Image[grid.row, grid.column];
+            Image[,] imageControls = new Image[grid.Rows, grid.Columns];
             int cellSize = 25;
 
-            for (int r = 0; r < grid.row; r++)
+            for (int r = 0; r < grid.Rows; r++)
             {
-                for (int c = 0; c < grid.column; c++)
+                for (int c = 0; c < grid.Columns; c++)
                 {
                     Image imageControl = new Image
                     {
@@ -86,11 +86,11 @@ namespace Tetris
             return imageControls;
         }
 
-        private void DrawGrid(Grid grid)
+        private void DrawGrid(GameGrid grid)
         {
-            for (int r = 0; r < grid.row; r++)
+            for (int r = 0; r < grid.Rows; r++)
             {
-                for (int c = 0; c < grid.column; c++)
+                for (int c = 0; c < grid.Columns; c++)
                 {
                     int id = grid[r, c];
                     imageControls[r,c].Opacity =1;
@@ -104,11 +104,11 @@ namespace Tetris
         {
             foreach (Position p in block.TilePositions())
             {
-                if (p.Row >= 0) // Only draw tiles within the visible grid.
-                {
+                //if (p.Row >= 0) // Only draw tiles within the visible grid.
+                //{
                     imageControls[p.Row,p.Column].Opacity =1;
                     imageControls[p.Row, p.Column].Source = tileImages[block.Id];
-                }
+                //}
             }
         }
 
@@ -128,18 +128,12 @@ namespace Tetris
         // Draws the ghost block indicating where the block would land.
         private void DrawGhostBlock(Block block)
         {
-            // Clear any previous ghost blocks by iterating through the entire grid.
-            
-            // Draw the new ghost block.
             int dropDistance = gameState.BlockDropDistance();
+
             foreach (Position p in block.TilePositions())
             {
-                int ghostRow = p.Row + dropDistance;
-                //if (ghostRow < gameState.GameGrid.row && p.Column < gameState.GameGrid.column)
-                //{
-                    imageControls[ghostRow, p.Column].Opacity = 0.25; // Set lower opacity for ghost blocks.
-                    imageControls[ghostRow, p.Column].Source = tileImages[block.Id];
-                //}
+                imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
+                imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
             }
         }
         // Combines all drawing operations.
@@ -152,26 +146,32 @@ namespace Tetris
             DrawHeldBlock(gameState.HeldBlock);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
         }
+        private int CalculateDelay(int score)
+        {
+            // Added unnecessary steps to calculate delay with redundant logic
+            int delay = maxDelay;
+            int scoreAdjustment = 0;
+            for(int i=0;i<score;i++)
+              scoreAdjustment += delayDecrease;
+            delay -= scoreAdjustment;
+
+            return Math.Max(mindelay, delay);
+        }
          // Main game loop.
         private async Task GameLoop()
         {
             Draw(gameState);
             while (!gameState.GameOver)
             {
-                int delay = maxDelay;
-                int buffer = 0;
-                for(int i = 0; i<gameState.Score;i++)
-                    buffer += delayDecrease; 
-                delay -= buffer;
-                if(delay<mindelay) delay=mindelay;
-                await Task.Delay(500);
+                int delay = CalculateDelay(gameState.Score);
+                await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
-
+        
         // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -182,9 +182,9 @@ namespace Tetris
                 case Key.Left: gameState.MoveBlockLeft(); break;
                 case Key.Right: gameState.MoveBlockRight(); break;
                 case Key.Down: gameState.MoveBlockDown(); break;
-                case Key.Up: gameState.RotateBlockCW(); break;
+                case Key.C: gameState.RotateBlockCW(); break;
                 case Key.Z: gameState.RotateBlockCCW(); break;
-                case Key.C: gameState.HoldBlock(); break;
+                case Key.X: gameState.HoldBlock(); break;
                 case Key.Space: gameState.DropBlock(); break;
                 default: return;
             }
@@ -211,6 +211,7 @@ namespace Tetris
                     gameState = new GameState();
                     StartPage.Visibility = Visibility.Hidden;
                     GameOverMenu.Visibility = Visibility.Hidden;
+                    
                     await GameLoop();
                 }
                 else

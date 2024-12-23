@@ -1,10 +1,10 @@
 using System;
+
 namespace Tetris
 {
     public class BlockQueue
     {
-        // Array containing all possible block types.
-        private Block[] blocks = new Block[]
+        private readonly Block[] blocks = new Block[]
         {
             new IBlock(),
             new JBlock(),
@@ -12,37 +12,40 @@ namespace Tetris
             new OBlock(),
             new SBlock(),
             new TBlock(),
-            new ZBlock(),
+            new ZBlock()
         };
-
-        // Random number generator for selecting blocks randomly.
-        private Random random = new Random();
-
-        // Holds the next block to be used in the game.
+        private readonly Random random = new Random();
+        private readonly Random randomWrapper;
+        private Block lastBlock;
         public Block NextBlock { get; private set; }
 
-        // Selects a random block from the available block types.
-        private Block RandomBlock()
-        {
-            return blocks[random.Next(blocks.Length)];
-        }
-
-        // Constructor to initialize the queue with a random block as the next block.
         public BlockQueue()
         {
+            randomWrapper = new Random(); 
             NextBlock = RandomBlock();
+            lastBlock = NextBlock;
         }
 
-        // Returns the current next block and updates to a new random block.
-        public Block GetandUpdate()
+        private Block RandomBlock()
         {
-            Block block = NextBlock; // Store the current next block.
-            //Ensure the new block is different from the previous one.
+            int index = randomWrapper.Next(blocks.Length);
+            return blocks[index];
+        }
+
+        public Block GetAndUpdate()
+        {
+            Block blockToReturn = NextBlock;
             do
             {
                 NextBlock = RandomBlock();
-            } while (block.Id == NextBlock.Id);
-            return block;
+                if (lastBlock != null && NextBlock.Id == lastBlock.Id)
+                {
+                    continue; 
+                }
+            }
+            while (blockToReturn.Id == NextBlock.Id);
+            lastBlock = NextBlock;
+            return blockToReturn;
         }
     }
 }
