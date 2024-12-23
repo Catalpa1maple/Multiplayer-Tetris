@@ -211,7 +211,9 @@ namespace Tetris
         // Starts the game loop when the canvas is loaded.
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            gameState = new GameState();
+            StartPage.Visibility = Visibility.Hidden;
+            GameOverMenu.Visibility = Visibility.Hidden;
             await GameLoop();
         }
 
