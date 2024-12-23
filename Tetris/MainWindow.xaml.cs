@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using TCP;
 
 namespace Tetris
 {
@@ -49,6 +50,8 @@ namespace Tetris
         private int delayDecrease = 70;
         private bool isMultiplayer = false;
         private static TCPSocket tcp = new TCPSocket();
+        
+        private Multiplayer multiplayer = new Multiplayer();
 
         // The game's state.
         private GameState gameState = new GameState();
@@ -166,6 +169,8 @@ namespace Tetris
                 int delay = CalculateDelay(gameState.Score);
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
+                multiplayer.MultiplayerUpdate(gameState, tcp);
+                DrawRivals(multiplayer);
                 Draw(gameState);
             }
             GameOverMenu.Visibility = Visibility.Visible;
@@ -289,6 +294,10 @@ namespace Tetris
 
                 }
             }
+        }
+
+        private void DrawRivals(Multiplayer multiplayer) { 
+            
         }
 
         private void Quit(object sender, RoutedEventArgs e)

@@ -31,6 +31,9 @@ namespace Tetris
         public Block HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
 
+        public int LinesToSend { get; private set; }
+
+
         public GameState()
         {
             GameGrid = new GameGrid(22, 10);
@@ -126,7 +129,8 @@ namespace Tetris
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
 
-            Score += GameGrid.ClearFullRows();
+            LinesToSend = GameGrid.ClearFullRows();
+            Score += LinesToSend;
 
             if (IsGameOver())
             {
