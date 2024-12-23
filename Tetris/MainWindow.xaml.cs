@@ -107,7 +107,7 @@ namespace Tetris
                     imageControlsPlayer2[r,c].Opacity =1;
                     imageControlsPlayer2[r, c].Source = tileImages[grid[r,c]];
                 }
-            }
+            } return;
             }
 
             for (int r = 0; r < grid.Rows; r++)
