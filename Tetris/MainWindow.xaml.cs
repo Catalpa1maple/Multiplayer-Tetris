@@ -147,9 +147,9 @@ namespace Tetris
                 {
                     imageControlsPlayer2[p.Row,p.Column].Opacity =1;
                     imageControlsPlayer2[p.Row, p.Column].Source = tileImages[block.Id];
-                } return;
+                } 
             }
-
+                return;
             }
             foreach (Position p in block.TilePositions())
             {
