@@ -188,9 +188,14 @@ namespace Tetris
                         }
                         DrawRivals(multiplayer);
                     }
-                    catch (Exception)
+                    catch (ConnectionClosedException)
                     {
                         MessageBox.Show("Connection lost");
+                        Quit();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("another exception");
                         Quit();
                     }
                 }

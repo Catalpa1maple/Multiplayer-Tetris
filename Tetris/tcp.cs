@@ -119,8 +119,11 @@ namespace TCP
                 }
                 return message;
             }
-            catch
+            catch (ConnectionClosedException)
             {
+                return message;
+            }
+            catch{
                 //handle send/recv exception 
                 Console.WriteLine("Send/Recv Error");
                 sockfd?.Close();
