@@ -77,7 +77,22 @@ namespace Tetris
             int cellSize = 25;
             Image[,] imageControls = new Image[grid.Rows, grid.Columns];
             if(player==2){
-                
+                for (int r = 0; r < grid.Rows; r++)
+            {
+                for (int c = 0; c < grid.Columns; c++)
+                {
+                    Image imageControl = new Image
+                    {
+                        Width = cellSize,
+                        Height = cellSize
+                    };
+
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
+                    Canvas.SetLeft(imageControl, c * cellSize);
+                    GameCanvas2.Children.Add(imageControl);
+                    imageControls[r, c] = imageControl;
+                }
+            }return imageControls;
             }
             for (int r = 0; r < grid.Rows; r++)
             {
