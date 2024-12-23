@@ -110,8 +110,19 @@ namespace Tetris
         }
 
         // Draws the currently active block.
-       private void DrawBlock(Block block)
+       private void DrawBlock(Block block, int player)
         {
+            if(player==2){
+                foreach (Position p in block.TilePositions())
+            {
+                if (p.Row >= 0) // Only draw tiles within the visible grid.
+                {
+                    imageControls[p.Row,p.Column].Opacity =1;
+                    imageControls[p.Row, p.Column].Source = tileImages[block.Id];
+                }
+            }
+
+            }
             foreach (Position p in block.TilePositions())
             {
                 if (p.Row >= 0) // Only draw tiles within the visible grid.
@@ -124,9 +135,13 @@ namespace Tetris
 
 
         // Draws the next block in the block queue.
-        private void DrawNextBlock(BlockQueue blockQueue)
+        private void DrawNextBlock(BlockQueue blockQueue, int player)
         {
             Block next = blockQueue.NextBlock;
+            if( player ==2){
+                NextImage2.Source = blockImages[next.Id];
+                return;
+            }
             NextImage.Source = blockImages[next.Id];
             
         }
@@ -134,8 +149,9 @@ namespace Tetris
         // Draws the held block.
         private void DrawHeldBlock(Block heldBlock, int player)
         {
-            if(isPlayer2){
+            if(player==2){
                 HoldImage2.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
+                return;}
             HoldImage.Source = heldBlock == null ? blockImages[0] : blockImages[heldBlock.Id];
         }
         // Draws the ghost block indicating where the block would land.
