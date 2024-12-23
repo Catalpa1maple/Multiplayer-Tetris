@@ -221,6 +221,7 @@ namespace Tetris
 
             if (isMultiplayer)
             {
+                MessageBox.Show("HIHIHIHIH");
                 GameOverMenu.Visibility = Visibility.Visible;
                 switch (isWin)
                 {
