@@ -66,17 +66,19 @@ namespace Tetris
             InitializeComponent();
             gameState = new GameState();
             gameStatePlayer2 = new GameState();
-            imageControls = SetupGameCanvas(gameState.GameGrid);
-            imageControlsPlayer2 = SetupGameCanvas(gameStatePlayer2.GameGrid);
+            imageControls = SetupGameCanvas(gameState.GameGrid, 1);
+            imageControlsPlayer2 = SetupGameCanvas(gameStatePlayer2.GameGrid,2);
         }
         
 
         // Sets up the game canvas with a grid of Image controls.
-        private Image[,] SetupGameCanvas(GameGrid grid)
+        private Image[,] SetupGameCanvas(GameGrid grid, int player)
         {
             int cellSize = 25;
             Image[,] imageControls = new Image[grid.Rows, grid.Columns];
-            
+            if(player==2){
+                
+            }
             for (int r = 0; r < grid.Rows; r++)
             {
                 for (int c = 0; c < grid.Columns; c++)
