@@ -204,7 +204,7 @@
         <Grid x:Name="StartPage"
               Grid.RowSpan="2"
               Grid.ColumnSpan="3"
-              Visibility="Hidden">
+              Visibility="Visible">
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/Background.jpeg" />
             </Grid.Background>
