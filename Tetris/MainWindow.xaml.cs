@@ -152,7 +152,6 @@ namespace Tetris
         }
         private int CalculateDelay(int score)
         {
-            // Added unnecessary steps to calculate delay with redundant logic
             int delay = maxDelay;
             int scoreAdjustment = 0;
             for(int i=0;i<score;i++)
