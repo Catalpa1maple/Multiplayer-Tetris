@@ -194,14 +194,12 @@ namespace Tetris
             {
                 int delay = CalculateDelay(gameState.Score);
                 gameState.MoveBlockDown();
-                await Task.Delay(delay);
-
                 if (isMultiplayer)
                 {
                     try
                     {
                         isWin = multiplayer.MultiplayerUpdate(gameState, tcp);
-                        if(isWin != 1) continue;
+                        if (isWin != 1) continue;
                         DrawRivals(multiplayer);
                     }
                     catch (ConnectionClosedException)
@@ -215,7 +213,7 @@ namespace Tetris
                         Quit();
                     }
                 }
-
+                await Task.Delay(delay);
                 Draw(gameState);
             }
 
@@ -240,7 +238,7 @@ namespace Tetris
                 }
                 //PlagAgain.Visibility = Visibility.Hidden;
                 //Thread.Sleep(5000);
-                Quit();
+                //Quit();
             }
             else
             {
