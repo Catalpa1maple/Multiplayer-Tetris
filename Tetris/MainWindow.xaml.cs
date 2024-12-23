@@ -155,7 +155,8 @@ namespace Tetris
         {
             int delay = maxDelay;
             int scoreAdjustment = 0;
-            for(int i=0;i<score;i++)
+            int scoped = score/100;
+            for(int i=0;i<scoped;i++)
               scoreAdjustment += delayDecrease;
             delay -= scoreAdjustment;
 
@@ -227,13 +228,6 @@ namespace Tetris
         }
 
        
-
-        // Starts the game loop when the canvas is loaded.
-        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
-        {
-            //gameState = new GameState();
-            //await GameLoop();
-        }
 
         // Resets the game and starts a new session when "Play Again" is clicked.
         private async void PlayAgain_Click(object sender, RoutedEventArgs e)
