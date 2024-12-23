@@ -94,23 +94,28 @@ namespace Tetris
         
         public void MoveBlockLeft()
         {
-            int moverow = 
-            CurrentBlock.Move(0, -1);
+            int moverow = 0;
+            int movecolumn= -1;
+            CurrentBlock.Move(moverow, movecolumn);
             if (BlockFits())
                 return;
-            else
-                CurrentBlock.Move(0, 1);
+            else{
+                movecolumn =1;
+                CurrentBlock.Move(moverow, movecolumn);}
             
         }
 
         public void MoveBlockRight()
         {
-            CurrentBlock.Move(0, 1);
+            int moverow = 0;
+            int movecolumn= 1;
+            CurrentBlock.Move(moverow, movecolumn);
 
             if (BlockFits())
                 return;
-            else
-                CurrentBlock.Move(0, -1);
+            else{
+                movecolumn = -1;
+                CurrentBlock.Move(moverow, movecolumn);}
             
         }
 
