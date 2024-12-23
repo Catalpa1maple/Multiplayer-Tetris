@@ -117,6 +117,8 @@ namespace Tetris
                 for (int c = 0; c < Columns; c++ ){
                     if (i != hole)
                         grid[Rows - 1,c] = 4;
+                    else
+                        grid[Rows-1,c] = 0;
                 }
             }       
         }
