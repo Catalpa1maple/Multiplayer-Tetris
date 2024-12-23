@@ -24,7 +24,7 @@ namespace Tetris
             }
         }
 
-        public GameGrid GameGrid { get; }
+        public Tetris.GameGrid GameGrid { get; }
         public BlockQueue BlockQueue { get; }
         public bool GameOver { get; private set; }
         public int Score { get; private set; }
@@ -33,7 +33,7 @@ namespace Tetris
 
         public GameState()
         {
-            GameGrid = new GameGrid(22, 10);
+            GameGrid = new Tetris.GameGrid(22, 10);
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
             CanHold = true;
