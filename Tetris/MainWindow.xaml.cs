@@ -217,6 +217,7 @@ namespace Tetris
                 {
                     MessageBox.Show("You don't have multiplayer connection now (Switch to single player)");
                     isMultiplayer = false;
+                    tcp.TCPClose();
                 }
             }
             else 

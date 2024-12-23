@@ -190,7 +190,7 @@
                         Foreground="Black"
                         Margin="0,20"
                         Padding="5"
-                        Click="PlayAgain_Click" Height="66" FontFamily="BIZ UDPGothic"/>
+                        Click="PlayAgain_Click" Height="66" FontFamily="BIZ UDPGothic" Opacity="0.8"/>
             </StackPanel>
             <Border CornerRadius="10"
                 Padding="10"
@@ -198,7 +198,7 @@
                 Width="500"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Center"
-                Margin="0,0,0,50">
+                Margin="0,0,0,50" Opacity="0.8">
 
 
                 <StackPanel>
@@ -219,7 +219,15 @@
                         Cursor="Cross"
                         IsEnabled="False"
                         Click="Join_Connect"
-                        Content="CONNET" FontFamily="BIZ UDPGothic" Height="40" >
+                        Content="CONNET" FontFamily="BIZ UDPGothic" Height="40" RenderTransformOrigin="0.5,0.5" >
+                            <Button.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Button.RenderTransform>
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="Black" Offset="1"/>
