@@ -207,6 +207,7 @@ namespace Tetris
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
         
+
         // Handles user input via keyboard.
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -228,7 +229,7 @@ namespace Tetris
         }
 
        
-
+        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e){}
         // Resets the game and starts a new session when "Play Again" is clicked.
         private async void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
