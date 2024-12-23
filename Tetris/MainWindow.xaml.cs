@@ -211,6 +211,10 @@ namespace Tetris
             DrawNextBlock(gameState.BlockQueue,player);
             DrawHeldBlock(gameState.HeldBlock,player);
             ScoreText.Text = $"You now have {gameState.Score} marks.";
+            if (player == 2)
+            {
+                ScoreText2.Text = $"You now have {gameState.Score} marks.";
+            }
         }
         private int CalculateDelay(int score)
         {

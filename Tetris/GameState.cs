@@ -132,7 +132,14 @@ namespace Tetris
         }
         private int CalculateScoreIncrement(int cleared){
             int basepoint = 100;
-            int multiplier = cleared *cleared * basepoint;
+            //int multiplier = cleared *cleared * basepoint;
+            multiplier = basepoint;
+            int tmp=1;
+            for(int i = 0; i < cleared; i++)
+            {
+                tmp = tmp * 2;
+            }
+            multiplier = basepoint * tmp;
             return multiplier;
         }
         private void PlaceBlock()
