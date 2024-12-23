@@ -122,20 +122,51 @@
                    Width="125" />
         </StackPanel>
 
+        <StackPanel x:Name="Rival"
+                    Grid.Row="1"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Margin="0,729,0,0" Height="141" Width="318"
+                    Background="White" Opacity="0.6"
+                    >
+            <TextBlock Text="Rival"
+                    Padding ="10" 
+                FontWeight="Bold"
+                FontSize="30"
+                TextAlignment="Center" 
+                Foreground="Black" FontFamily="BIZ UDPGothic" Height="51"/>
+            <TextBlock Text="Rival's score:"
+                    Padding ="10"
+                       
+                x:Name="RivalScore"
+                FontWeight="Bold"
+                FontSize="25"
+                TextAlignment="Left" 
+                Foreground="black" FontFamily="BIZ UDPGothic" Height="43"/>
+            <TextBlock Text="Lines For You:"
+                    Padding ="10" 
+                x:Name="RivalLines"
+                FontWeight="Bold"
+                FontSize="25"
+                TextAlignment="Left" 
+                Foreground="black" FontFamily="BIZ UDPGothic"/>
+        </StackPanel>
+
+
         <Button x:Name="Quit_btn"
-            Background="White"
-            Foreground="Black"
-            FontWeight="DemiBold"
-            Grid.Row="1"
-            Grid.Column="2"
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Center"
-            Padding="20"
-            Margin="0,0,20,20"
-            Width="150"
-            Height="40"
-            Click="Quit"
-            Content="QUIT" FontFamily="BIZ UDPGothic" />
+                Background="White"
+                Foreground="Black"
+                FontWeight="DemiBold"
+                Grid.Row="1"
+                Grid.Column="2"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Padding="20"
+                Margin="0,0,20,20"
+                Width="150"
+                Height="40"
+                Click="Quit"
+                Content="QUIT" FontFamily="BIZ UDPGothic" />
 
 
         <Grid x:Name="GameOverMenu"
@@ -173,7 +204,7 @@
         <Grid x:Name="StartPage"
               Grid.RowSpan="2"
               Grid.ColumnSpan="3"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/Background.jpeg" />
             </Grid.Background>

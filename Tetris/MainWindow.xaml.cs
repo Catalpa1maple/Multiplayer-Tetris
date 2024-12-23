@@ -296,8 +296,13 @@ namespace Tetris
             }
         }
 
-        private void DrawRivals(Multiplayer multiplayer) { 
-            
+        private void DrawRivals(Multiplayer multiplayer) {
+            if (!isMultiplayer) {
+                Rival.Visibility = Visibility.Hidden;
+                return;
+            }
+            RivalScore.Text = $"Rival's score: {multiplayer.rivalMessage.score}";
+            RivalLines.Text = $"Lines For You: {multiplayer.rivalMessage.lineToSend}";
         }
 
         private void Quit(object sender, RoutedEventArgs e)

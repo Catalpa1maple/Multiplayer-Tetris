@@ -19,7 +19,7 @@ namespace TCP
 
     }
 
-    class TCPSocket
+    public class TCPSocket
     {
         private Socket? sockfd;
         private Socket? listener;
