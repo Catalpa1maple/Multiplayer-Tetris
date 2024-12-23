@@ -237,7 +237,7 @@ namespace Tetris
                             $"You Will Go back to the StarPage Automatically";
                         break;
                 }
-                PlagAgain.Visibility = Visibility.Hidden;
+                //PlagAgain.Visibility = Visibility.Hidden;
                 Thread.Sleep(5000);
                 Quit();
             }
