@@ -20,14 +20,9 @@ namespace Tetris
 
             message.score = gameSate.Score;
             message.lineToSend = gameSate.LinesToSend;
+            if (gameSate.GameOver) message.lineToSend = -1;
             gameSate.LinesToSend = 0;
-
-            if (gameSate.GameOver)
-            {
-                message.lineToSend = -1;
-                rivalMessage = tcp.TCPupdate(message);
-                return -1;
-            }
+            
 
             try
             {
@@ -41,6 +36,8 @@ namespace Tetris
                 tcp.TCPClose();
                 throw;
             }
+
+            if (gameSate.GameOver && rivalMessage.lineToSend == -1) return 2; //Game Draw
 
             if (rivalMessage.lineToSend == -1)
             {

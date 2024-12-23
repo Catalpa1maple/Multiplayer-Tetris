@@ -187,6 +187,11 @@ namespace Tetris
                             MessageBox.Show("You win !!!");
                             Quit();
                         }
+                        else if (isWin == 2)
+                        {
+                            MessageBox.Show("Game Draw !!!");
+                            Quit();
+                        }
                         DrawRivals(multiplayer);
                     }
                     catch (ConnectionClosedException)
