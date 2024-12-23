@@ -9,10 +9,16 @@ namespace Tetris
 
         public int this[int r, int c]
         {
-            get { tempValue = grid[r, c];
-                return tempValue;}
-            set { tempValue = value;
-                grid[r, c] = tempValue;}
+            get
+            {
+                tempValue = grid[r, c];
+                return tempValue;
+            }
+            set
+            {
+                tempValue = value;
+                grid[r, c] = tempValue;
+            }
         }
 
         public GameGrid(int rows, int columns)
@@ -20,22 +26,18 @@ namespace Tetris
             Rows = rows;
             Columns = columns;
             grid = new int[rows, columns];
-            tempValue = 0;
-        }
-
-        public bool IsInside(int r, int c)
-        {
-            bool isInside = r >= 0 && r < Rows && c >= 0 && c < Columns;
-            if (!isInside)
-            {
-                return false;
-            }
-            return true;
+            for (int r = 0; r < rows; r++)
+                for (int c = 0; c < columns; c++)
+                    grid[r, c] = 0;
         }
 
         public bool IsEmpty(int r, int c)
         {
-            bool inside = IsInside(r, c);
+            bool inside;
+            if (r >= 0 && r < Rows && c >= 0 && c < Columns)
+                inside = true;
+            else
+                inside = false;
             bool isEmpty = inside && grid[r, c] == 0;
             return isEmpty;
         }
@@ -64,7 +66,7 @@ namespace Tetris
             bool[] rowStatus = new bool[Columns];
             for (int c = 0; c < Columns; c++)
             {
-                rowStatus[c] = grid[r, c] == 0;
+                rowStatus[c] = IsEmpty(r, c);
             }
 
             foreach (bool status in rowStatus)
@@ -100,11 +102,30 @@ namespace Tetris
             }
         }
 
+        public void BeingAttacked(int count)
+        {
+            Random random = new Random();
+            int hole;
+            for(int i = 0; i < count; i++)
+            {
+                hole = random.Next(0,10);
+                for(int r = 1; r < Rows; r++)
+                {
+                    for(int c = 0 ; c < Columns; c++)
+                        grid[r - 1, c] = grid[r,c];
+                }
+                for (int c = 0; c < Columns; c++ ){
+                    if (i != hole)
+                        grid[Rows - 1,c] = 4;
+                }
+            }       
+        }
+
         public int ClearFullRows()
         {
             int cleared = 0;
 
-            for (int r = Rows-1; r >= 0; r--)
+            for (int r = Rows - 1; r >= 0; r--)
             {
                 bool rowFull = IsRowFull(r);
                 if (rowFull)

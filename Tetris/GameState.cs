@@ -144,6 +144,16 @@ namespace Tetris
             }
         }
 
+        /*private void ReceiveAttack(int count)
+        {
+            GameGrid.BeingAttacked(count);
+
+            if (IsGameOver())
+            {
+                GameOver = true;
+            }
+        }*/
+
         public void MoveBlockDown()
         {
             CurrentBlock.Move(1, 0);

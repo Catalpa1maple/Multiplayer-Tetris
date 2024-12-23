@@ -15,7 +15,7 @@ namespace Tetris
             message.lineToSend = 0;
         }
 
-        public int MultiplayerUpdate(GameState gameSate, TCPSocket tcp)
+        public void MultiplayerUpdate(GameState gameSate, TCPSocket tcp)
         {
 
             message.score = gameSate.Score;
@@ -34,8 +34,16 @@ namespace Tetris
                 tcp.TCPClose();
             }
 
-            if (message.lineToSend > rivalMessage.lineToSend) return 0;
-            else return LinesToAdd = rivalMessage.lineToSend - message.lineToSend;
+            if (message.lineToSend > rivalMessage.lineToSend)
+            {
+                gameSate.GameGrid.BeingAttacked(0);
+                return;
+            }
+            else
+            {
+                gameSate.GameGrid.BeingAttacked(rivalMessage.lineToSend - message.lineToSend);
+                return;
+            }
 
 
         }
