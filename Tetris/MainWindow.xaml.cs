@@ -411,6 +411,9 @@ namespace Tetris
         private void JoinPlayer(object sender, RoutedEventArgs e) 
         {
             isPlayer2 = true;
+            GameCanvas2.Visibility = Visibility.Visible;
+            HoldImage2.Visibility = Visibility.Visible;
+            NextImage2.Visibility = Visibility.Visible;
             MessageBox.Show("Player 2 Join");
         }
 

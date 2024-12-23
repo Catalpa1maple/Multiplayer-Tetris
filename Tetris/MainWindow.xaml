@@ -88,6 +88,7 @@
              Grid.Column="2"
              Margin="0,0,0,20">
             <Canvas x:Name="GameCanvas2"
+                Visibility="Hidden"
                 Background="Black"
                 Width="250"
                 Height="500"
@@ -106,6 +107,7 @@
                    TextAlignment="Center" FontFamily="BIZ UDPGothic" />
 
         <TextBlock x:Name="ScoreText2"
+                   Visibility="Hidden"
            Grid.Row="0"
             Grid.Column="2"
            Text="Score: "
@@ -241,7 +243,7 @@
 
         <Grid x:Name="StartPage"
               Grid.RowSpan="2"
-              Grid.ColumnSpan="3"
+              Grid.ColumnSpan="4"
               Visibility="Hidden">
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/Background.jpeg" />
