@@ -208,6 +208,15 @@ namespace Tetris
                 
                 Draw(gameState);
             }
+
+            if (isMultiplayer) {
+                GameCanvas.Visibility = Visibility.Visible;
+                FinalScoreText.Text = $"You gained {gameState.Score} marks. " +
+                    $"You Will Go back to the StarPage Automatically";
+                PlagAgain.Visibility = Visibility.Hidden;
+                Thread.Sleep(5000);
+                Quit();
+            } 
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"You gained {gameState.Score} marks.";
         }
