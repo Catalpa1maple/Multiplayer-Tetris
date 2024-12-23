@@ -37,12 +37,20 @@ namespace Tetris
                 throw;
             }
 
-            if (gameSate.GameOver && rivalMessage.lineToSend == -1) return 2; //Game Draw
-
+            if (gameSate.GameOver && rivalMessage.lineToSend == -1)
+            {
+                gameSate.GameOver = true;
+                return 2; //Game Draw
+            }
+            if (gameSate.GameOver) 
+            { 
+                gameSate.GameOver = true;
+                return -1; //You Lose
+            }
             if (rivalMessage.lineToSend == -1)
             {
                 gameSate.GameOver = true;
-                return 0;
+                return 0; //You Win
             }
 
             if (message.lineToSend > rivalMessage.lineToSend)

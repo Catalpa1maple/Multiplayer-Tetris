@@ -197,21 +197,6 @@ namespace Tetris
                     try
                     {
                         isWin = multiplayer.MultiplayerUpdate(gameState, tcp);
-                        if (isWin == -1)
-                        {
-                            MessageBox.Show("You loss !!!");
-                            Quit();
-                        } // game over and rival 
-                        else if (isWin == 0)
-                        {
-                            MessageBox.Show("You win !!!");
-                            Quit();
-                        }
-                        else if (isWin == 2)
-                        {
-                            MessageBox.Show("Game Draw !!!");
-                            Quit();
-                        }
                         DrawRivals(multiplayer);
                     }
                     catch (ConnectionClosedException)
@@ -232,8 +217,21 @@ namespace Tetris
             if (isMultiplayer)
             {
                 GameOverMenu.Visibility = Visibility.Visible;
-                FinalScoreText.Text = $"You gained {gameState.Score} marks. " +
-                    $"You Will Go back to the StarPage Automatically";
+                switch (isWin)
+                {
+                    case 0:
+                        FinalScoreText.Text = $"You Win! You gained {gameState.Score} marks. " +
+                            $"You Will Go back to the StarPage Automatically";
+                        break;
+                    case -1:
+                        FinalScoreText.Text = $"You Lose! You gained {gameState.Score} marks. " +
+                            $"You Will Go back to the StarPage Automatically";
+                        break;
+                    case 2:
+                        FinalScoreText.Text = $"Draw! You gained {gameState.Score} marks. " +
+                            $"You Will Go back to the StarPage Automatically";
+                        break;
+                }
                 PlagAgain.Visibility = Visibility.Hidden;
                 Thread.Sleep(5000);
                 Quit();
