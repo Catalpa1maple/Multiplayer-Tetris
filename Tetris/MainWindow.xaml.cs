@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using System.Threading;
 using System.Windows.Documents;
 using TCP;
+using System;
 
 namespace Tetris
 {
@@ -471,14 +472,35 @@ namespace Tetris
             }
         }
 
-        private void JoinPlayer(object sender, RoutedEventArgs e) 
+        private void JoinPlayer(object sender, RoutedEventArgs e)
         {
-            isPlayer2 = true;
-            GameCanvas2.Visibility = Visibility.Visible;
-            HoldImage2.Visibility = Visibility.Visible;
-            NextImage2.Visibility = Visibility.Visible;
-            ScoreText2.Visibility = Visibility.Visible;
-            MessageBox.Show("Player 2 Join");
+            if (!isPlayer2)
+            {
+                isPlayer2 = true;
+                GameCanvas2.Visibility = Visibility.Visible;
+                HoldImage2.Visibility = Visibility.Visible;
+                NextImage2.Visibility = Visibility.Visible;
+                ScoreText2.Visibility = Visibility.Visible;
+                MessageBox.Show("Player 2 Join");
+                return;
+            }
+            else
+            {
+                isPlayer2 = false;
+                GameCanvas2.Visibility = Visibility.Collapsed;
+                HoldImage2.Visibility = Visibility.Collapsed;
+                NextImage2.Visibility = Visibility.Collapsed;
+                ScoreText2.Visibility = Visibility.Collapsed;
+                MessageBox.Show("Player 2 disabled");
+                return;
+            }
+        }
+
+        private void Instruct(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("When single and remote mode:\n left_arrow, right_arrow, down_arrow, C=Clockwise, Z=CounterClockwise,  X=Hold,Space=Drop\n\n" +
+                            "When 2  players mode(loacl):\n P1: A:Left,  D:Right,  S:Down,  Q:Clockwise,  E:CounterClocker,  W:Hold,  Space:Drop\n"
+                            + "P2: Left:Left,  Right:Right,  Down:Down,  P:Clockwise,  I:CounterClocker,  K:Hold M:Drop");
         }
 
         private void DrawRivals(Multiplayer multiplayer) {
